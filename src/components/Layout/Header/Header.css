@@ -1,9 +1,14 @@
-:root {
-  --primary: #ff4d8d;
-  --secondary: #3aa0ff;
-  --gradient: linear-gradient(135deg, #3aa0ff, #ff4d8d);
-}
+:root{
+    --primary:#f58220;
+    --primary-hover:#e46d0c;
 
+    --text:#333;
+    --text-light:#666;
+
+    --border:#ececec;
+
+    --background:#fff;
+}
 /* ================= ADMIN BAR ================= */
 .adminBar {
   position: fixed;
@@ -19,7 +24,6 @@
 
   padding: 0 14px;
 
-  background: var(--gradient);
   z-index: 10001;
 }
 .adminBar a {
@@ -41,7 +45,7 @@
   left: 0;
   right: 0;
 
-  height: 60px;
+  height: 79px;
 
   display: flex;
   align-items: center;
@@ -49,14 +53,12 @@
 
   z-index: 10000;
 
-  padding: 0 16px;
+padding:0 30px;
   box-sizing: border-box;
 
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(16px);
-
-
-  transition: transform 0.3s ease;
+background:#fff;
+border-bottom:1px solid var(--border);
+box-shadow:0 2px 12px rgba(0,0,0,.05);
 }
 .header.hasAdminBar {
   top: 24px;
@@ -69,15 +71,7 @@
 .header.hide {
   transform: translateY(-100%);
 }
-/* ================= LOGO ================= */
-.logo {
-  font-size: 28px;
-  font-weight: 800;
-  text-decoration: none;
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
+
 /* ================= NAV ================= */
 .nav {
   display: flex;
@@ -102,13 +96,14 @@
   left: 0;
   height: 2px;
   width: 0%;
-  background: var(--gradient);
+background: var(--primary);
+height: 3px;
+border-radius: 999px;
   transition: 0.3s;
 }
 
 .nav a:hover {
-  color: #ff4d8d;
-}
+color: var(--primary);}
 
 .nav a:hover::after {
   width: 100%;
@@ -120,7 +115,8 @@
 /* LOGIN */
 
 .loginBtn {
-  background: var(--gradient);
+background: var(--primary);
+box-shadow: 0 6px 18px rgba(245,130,32,.25);
   color: white;
   padding: 10px 18px;
   border-radius: 12px;
@@ -128,12 +124,11 @@
   text-decoration: none;
   font-weight: 600;
 
-  box-shadow: 0 10px 25px rgba(58,160,255,0.25);
   transition: 0.3s;
 }
-
-.loginBtn:hover {
-  transform: translateY(-2px);
+.loginBtn:hover{
+    background: var(--primary-hover);
+    transform: translateY(-2px);
 }
 
 /* USER */
@@ -143,14 +138,16 @@
   gap: 12px;
   align-items: center;
 }
-
+.userBox button:hover{
+    background: var(--primary-hover);
+}
 .userBox span {
   font-weight: 600;
   font-size: 14px;
 }
 
 .userBox button {
-  background: var(--gradient);
+background: var(--primary);
   border: none;
   color: white;
 
@@ -163,17 +160,19 @@
 
 /* ================= MENU ================= */
 
-.menuToggle {
-  display: none;
-  font-size: 28px;
-  border: none;
-  cursor: pointer;
-
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.menuToggle{
+    display:none;
+    border:none;
+    background:none;
+    color:var(--primary);
+    font-size:30px;
+    cursor:pointer;
+    padding:4px;
 }
 
+.menuToggle:hover{
+    color:var(--primary-hover);
+}
 .menuOverlay {
   position: fixed;
   inset: 0;
@@ -214,8 +213,7 @@
   top: 100%;
   left: 0;
   right: 0;
-
-  background: rgba(255,255,255,.96);
+background:#fff;
   backdrop-filter: blur(18px);
 
   flex-direction: column;
@@ -233,8 +231,7 @@
     opacity .3s ease,
     transform .35s cubic-bezier(.22,1,.36,1),
     visibility 0s linear .35s;
-
-  border-bottom: 1px solid rgba(58,160,255,.15);
+border-bottom:1px solid var(--border);
   box-shadow: 0 20px 40px rgba(0,0,0,.08);
 
   z-index: 9999;
@@ -279,8 +276,8 @@
 }
 
 .nav a:hover {
-  background: #f8fafc;
-}
+background:#fff7ef;
+color:var(--primary);}
   .header {
     padding: 9px;
   }

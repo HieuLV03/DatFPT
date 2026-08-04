@@ -55,24 +55,28 @@ console.log("sliderError", sliderRes.error);
 <Slider sliders={sliders} />
 <section className="section introSection">
   <div className="introContent">
-    <span className="sectionTag">TRÀ SỮA NHÀ NGỌC</span>
 
-    <h1>Trà sữa Nhà Ngọc – Thức uống thơm ngon, chất lượng mỗi ngày</h1>
+    <span className="sectionTag">
+      FPT TELECOM
+    </span>
+
+    <h1>
+      Internet FPT tốc độ cao – Kết nối ổn định cho mọi gia đình và doanh nghiệp
+    </h1>
 
     <p>
-      Trà sữa Nhà Ngọc chuyên phục vụ các loại trà sữa, trà trái cây,
-      cà phê và đồ uống được pha chế từ nguyên liệu chất lượng.
-      Với thực đơn đa dạng, hương vị thơm ngon và mức giá hợp lý,
-      chúng tôi mong muốn mang đến cho khách hàng những ly đồ uống
-      tươi ngon trong từng lần thưởng thức.
+      FPT Telecom là đơn vị cung cấp dịch vụ Internet cáp quang, truyền hình
+      FPT Play, Camera AI và các giải pháp công nghệ hàng đầu tại Việt Nam.
+      Với hạ tầng hiện đại cùng đội ngũ kỹ thuật chuyên nghiệp, chúng tôi mang
+      đến đường truyền tốc độ cao, ổn định và dịch vụ hỗ trợ nhanh chóng.
     </p>
 
     <p>
-      Ngoài các món bán chạy như trà sữa truyền thống, trà sữa khoai môn,
-      trà đào, trà vải và nhiều loại topping hấp dẫn,
-      Trà sữa Nhà Ngọc luôn cập nhật những thức uống mới để đáp ứng
-      sở thích của mọi khách hàng.
+      Khám phá các gói cước Internet FPT mới nhất, nhiều chương trình ưu đãi
+      hấp dẫn và đăng ký lắp đặt nhanh ngay hôm nay để trải nghiệm kết nối
+      chất lượng cho học tập, làm việc và giải trí.
     </p>
+
   </div>
 </section>
 <ScrollReveal>
@@ -81,18 +85,14 @@ console.log("sliderError", sliderRes.error);
 
         <div className="sectionHeader">
 
-          <span className="sectionTag">
-            SẢN PHẨM
-          </span>
-
-          <h2>Best Seller</h2>
+          <h2>Dịch vụ</h2>
 
         </div>
 
       <ListProduct products={products} />
 <div className="viewMoreWrap">
   <Link href="/products" className="viewMoreBtn">
-    Xem thêm sản phẩm
+    Xem thêm dịch vụ
         <span>→</span>
 
   </Link>

@@ -87,8 +87,7 @@ if (form.products.length === 0) {
     <div className="successPopup errorPopup">
       <div className="successIcon">⚠️</div>
 
-      <h2>Nhà Ngọc thông báo</h2>
-
+<h2>FPT Telecom</h2>
       <p>{errorPopup}</p>
 
       <button onClick={() => setErrorPopup("")}>
@@ -101,8 +100,7 @@ if (form.products.length === 0) {
 
       <div className="booking-box">
         
-        <h1>Đặt lịch tư vấn</h1>
-
+<h1>Đăng ký tư vấn dịch vụ FPT Telecom</h1>
         <form onSubmit={handleSubmit} className="booking-form">
           <input
             name="name"
@@ -126,90 +124,88 @@ if (form.products.length === 0) {
             value={form.email}
             onChange={handleChange}
           />
-<select
-  name="productType"
-  value={form.productType}
-  onChange={handleChange}
-  required
->
-  <option value="">-- Chọn hình thức làm đẹp --</option>
 
-  <option value="Làm tại cơ sở">
-    Làm tại cơ sở
-  </option>
-
-  <option value="Làm tại nhà">
-    Làm tại nhà
-  </option>
-</select>
- <div className="checkboxGroup">
+<div className="checkboxGroup">
   <p className="checkboxTitle">
-    Chọn dịch vụ cần tư vấn
+    Chọn dịch vụ bạn quan tâm
   </p>
 
   <label>
     <input
       type="checkbox"
-      value="Môi"
-      checked={form.products.includes("Môi")}
+      value="Internet cáp quang"
+      checked={form.products.includes("Internet cáp quang")}
       onChange={handleCheckbox}
     />
-    Môi
+    Internet cáp quang
   </label>
 
   <label>
     <input
       type="checkbox"
-      value="Mày"
-      checked={form.products.includes("Mày")}
+      value="Combo Internet + FPT Play"
+      checked={form.products.includes("Combo Internet + FPT Play")}
       onChange={handleCheckbox}
     />
-    Mày
+    Combo Internet + FPT Play
   </label>
 
   <label>
     <input
       type="checkbox"
-      value="Ti"
-      checked={form.products.includes("Ti")}
+      value="FPT Play"
+      checked={form.products.includes("FPT Play")}
       onChange={handleCheckbox}
     />
-    Ti
+    FPT Play
   </label>
 
   <label>
     <input
       type="checkbox"
-      value="Bikini"
-      checked={form.products.includes("Bikini")}
+      value="FPT Camera AI"
+      checked={form.products.includes("FPT Camera AI")}
       onChange={handleCheckbox}
     />
-    Bikini
+    FPT Camera AI
   </label>
 
   <label>
     <input
       type="checkbox"
-      value="Khử thâm"
-      checked={form.products.includes("Khử thâm")}
+      value="Internet doanh nghiệp"
+      checked={form.products.includes("Internet doanh nghiệp")}
       onChange={handleCheckbox}
     />
-    Khử thâm
+    Internet doanh nghiệp
+  </label>
+
+  <label>
+    <input
+      type="checkbox"
+      value="WiFi Mesh"
+      checked={form.products.includes("WiFi Mesh")}
+      onChange={handleCheckbox}
+    />
+    WiFi Mesh
   </label>
 </div>
-
-          <button disabled={loading}>
-            {loading ? "Đang gửi..." : "Gửi yêu cầu"}
-          </button>
+<div className="submitBar">
+  <button disabled={loading}>
+    {loading ? "Đang gửi..." : "Đăng ký tư vấn"}
+  </button>
+</div>
           {showPopup && (
   <div className="successOverlay">
     <div className="successPopup">
       <div className="successIcon">🎉</div>
 
-      <h2>Gửi thành công!</h2>
+<h2>Đăng ký thành công!</h2>
 
-<p>Bộ phận tư vấn sẽ liên hệ lại bạn trong thời gian sớm nhất để hỗ trợ chi tiết.</p>
-
+<p>
+Cảm ơn bạn đã đăng ký tư vấn dịch vụ FPT Telecom.
+Chuyên viên sẽ liên hệ trong thời gian sớm nhất để tư vấn gói cước phù hợp.
+</p>
       <button onClick={() => setShowPopup(false)}>
         Đóng
       </button>

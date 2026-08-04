@@ -17,7 +17,6 @@ const isAdminPage = pathname.startsWith("/admin");
   const [role, setRole] = useState("guest");
   const [loading, setLoading] = useState(true);
   const [showHeader, setShowHeader] = useState(true);
-const [lastScrollY, setLastScrollY] = useState(0);
 useEffect(() => {
   let lastScrollY = window.scrollY;
 
@@ -107,9 +106,9 @@ if (loading || isAdminPage) {
           <div className="headerLeft">
         <Link href="/" className="logo">
   <Image
-    src="/logokhongnen.png"
-    alt="Nhà Ngọc"
-    width={72}
+    src="/logo-ftel.svg"
+    alt="Logo FPT"
+    width={150}
     height={54}
     priority
   />
