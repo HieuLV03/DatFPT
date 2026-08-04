@@ -23,28 +23,104 @@ const playfair = Playfair_Display({
   variable: "--font-playfair",
 });
 
+
 export const metadata = {
-  metadataBase: new URL("https://nhangoc.vercel.app"),
+
+  metadataBase: new URL("https://fpttelecom.vn"),
+
   title: {
-    default: "Trà sữa Nhà Ngọc | Trà sữa ngon, trà trái cây, đồ uống & ăn vặt chất lượng",
-    template: "%s | Trà sữa Nhà Ngọc",
+    default:
+      "FPT Telecom | Internet tốc độ cao, Truyền hình FPT Play, Camera AI",
+
+    template:
+      "%s | FPT Telecom",
   },
+
   description:
-    "Trà sữa Nhà Ngọc chuyên phục vụ trà sữa, trà trái cây, cà phê và nhiều loại đồ uống thơm ngon.",
-  verification: {
-    google: "iMhkqfnYHYPZ2e7ZhvNa8URs0nteVRjtS03F9CKa0sU",
+    "FPT Telecom cung cấp Internet cáp quang tốc độ cao, truyền hình FPT Play, Camera AI và các giải pháp công nghệ hiện đại cho gia đình, doanh nghiệp.",
+
+
+  keywords: [
+    "FPT Telecom",
+    "Internet FPT",
+    "lắp mạng FPT",
+    "wifi FPT",
+    "truyền hình FPT Play",
+    "camera FPT",
+    "cáp quang FPT",
+  ],
+
+
+  openGraph: {
+
+    title:
+      "FPT Telecom | Internet tốc độ cao",
+
+    description:
+      "Đăng ký Internet FPT chính hãng, đường truyền ổn định, hỗ trợ lắp đặt nhanh.",
+
+    type:
+      "website",
+
+    locale:
+      "vi_VN",
+
+    siteName:
+      "FPT Telecom",
+
   },
+
+
+  twitter: {
+
+    card:
+      "summary_large_image",
+
+    title:
+      "FPT Telecom | Internet tốc độ cao",
+
+    description:
+      "Internet FPT, truyền hình FPT Play, Camera AI và giải pháp công nghệ.",
+
+  },
+
+
+  verification: {
+
+    google:
+      "iMhkqfnYHYPZ2e7ZhvNa8URs0nteVRjtS03F9CKa0sU",
+
+  },
+
 };
 
-export default function RootLayout({ children }) {
+
+export default function RootLayout({
+  children,
+}) {
+
   return (
+
     <html
+
       lang="vi"
+
       className={`${inter.variable} ${playfair.variable} ${poppins.variable}`}
+
     >
+
       <body className="appBody">
-        <ClientLayout>{children}</ClientLayout>
+
+        <ClientLayout>
+
+          {children}
+
+        </ClientLayout>
+
       </body>
+
     </html>
+
   );
+
 }

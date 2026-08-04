@@ -1,48 +1,164 @@
-.zaloButton {
-  position: fixed;
-  right: 24px;
-  bottom: 27px;
+.zaloButton{
 
-  width: 54px;
-  height: 54px;
+    position:fixed;
 
-  border-radius: 50%;
+    right:22px;
 
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+    bottom:25px;
 
-  font-size: 0;
+    width:58px;
 
-  z-index: 9999;
+    height:58px;
 
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 
-  animation: zaloPulse 1.8s infinite;
+    border-radius:50%;
+
+
+    background:#0068ff;
+
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+
+    text-decoration:none;
+
+
+    z-index:9999;
+
+
+    box-shadow:
+    0 10px 30px rgba(0,104,255,.35);
+
+
+    animation:
+    zaloFloat 2.5s ease-in-out infinite;
+
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-  .zaloButton {
-    right: 9px;
-    bottom: 27px;
 
-    width: 50px;
-    height: 50px;
-  }
+
+.zaloIcon{
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:800;
+
+    letter-spacing:-.5px;
+
 }
 
-@keyframes zaloPulse {
-  0% {
-    transform: scale(1);
-  }
 
-  50% {
-    transform: scale(1.08);
-  }
 
-  100% {
-    transform: scale(1);
-  }
+
+/* vòng sóng */
+
+.zaloButton::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-8px;
+
+
+    border-radius:50%;
+
+
+    border:2px solid rgba(0,104,255,.35);
+
+
+    animation:
+    zaloRipple 2s infinite;
+
+}
+
+
+
+
+.zaloButton:hover{
+
+    transform:scale(1.1);
+
+}
+
+
+
+
+
+@keyframes zaloFloat{
+
+
+0%,100%{
+
+    transform:translateY(0);
+
+}
+
+
+50%{
+
+    transform:translateY(-5px);
+
+}
+
+}
+
+
+
+
+@keyframes zaloRipple{
+
+
+0%{
+
+    transform:scale(.8);
+
+    opacity:1;
+
+}
+
+
+100%{
+
+    transform:scale(1.35);
+
+    opacity:0;
+
+}
+
+}
+
+
+
+
+
+@media(max-width:768px){
+
+
+.zaloButton{
+
+    right:19px;
+
+    bottom:24px;
+
+
+    width:54px;
+
+    height:54px;
+
+}
+
+
+.zaloIcon{
+
+    font-size:16px;
+
+}
+
 }

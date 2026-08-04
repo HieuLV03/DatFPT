@@ -2,25 +2,56 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+
 import "./BookingButton.css";
 
+
 export default function BookingButton() {
-  const [burst, setBurst] = useState(false);
+
+  const [burst,setBurst] = useState(false);
+
 
   const triggerBurst = () => {
+
     setBurst(true);
-    setTimeout(() => setBurst(false), 500);
+
+    setTimeout(()=>{
+      setBurst(false);
+    },600);
+
   };
 
-  useEffect(() => {
+
+  useEffect(()=>{
+
     window.triggerBookingBurst = triggerBurst;
-  }, []);
+
+    return ()=>{
+      delete window.triggerBookingBurst;
+    };
+
+  },[]);
+
+
 
   return (
-    <Link href="/booking" className="bookingFloat">
-      <div className={`bookingIcon ${burst ? "burst" : ""}`}>
+
+    <Link
+      href="/booking"
+      className="bookingFloat"
+    >
+
+
+      <div
+        className={`bookingIcon ${burst ? "burst":""}`}
+      >
+
         📅
+
       </div>
+
+
     </Link>
+
   );
 }

@@ -1,6 +1,6 @@
 .backBtn {
   position: fixed;
-  top: 60px;
+  top: 66px;
   left: 20px;
   z-index: 1000;
 
@@ -34,7 +34,7 @@
 
 @media (max-width: 768px) {
   .backBtn {
-    top: 51px;
+    top: 66px;
     left: 12px;
 
     padding: 9px 14px;
