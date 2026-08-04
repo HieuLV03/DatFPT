@@ -32,7 +32,7 @@ export default async function sitemap() {
   if (postError || productError) {
     return [
       {
-      url: "https://nhangoc.vercel.app",
+      url: "https://dat-fpt.vercel.app",
         lastModified: new Date().toISOString(),
       },
     ];
@@ -40,14 +40,14 @@ export default async function sitemap() {
 
   // POSTS URLS
   const postUrls = (posts || []).map((post) => ({
-    url: `https://nhangoc.vercel.app/posts/${post.slug}`,
+    url: `https://dat-fpt.vercel.app/posts/${post.slug}`,
     lastModified: safeDate(post.updated_at),
     changeFrequency: "weekly",
     priority: 0.8,
   }));
 
   const productUrls = (products || []).map((product) => ({
-    url: `https://nhangoc.vercel.app/products/${product.slug}`,
+    url: `https://dat-fpt.vercel.app/products/${product.slug}`,
     lastModified: safeDate(product.updated_at),
     changeFrequency: "weekly",
     priority: 0.9,
@@ -55,42 +55,42 @@ export default async function sitemap() {
 
 return [
   {
-    url: "https://nhangoc.vercel.app",
+    url: "https://dat-fpt.vercel.app",
     lastModified: new Date().toISOString(),
     changeFrequency: "daily",
     priority: 1,
   },
 
   {
-    url: "https://nhangoc.vercel.app/about",
+    url: "https://dat-fpt.vercel.app/about",
     lastModified: new Date().toISOString(),
     changeFrequency: "monthly",
     priority: 0.8,
   },
 
   {
-    url: "https://nhangoc.vercel.app/contact",
+    url: "https://dat-fpt.vercel.app/contact",
     lastModified: new Date().toISOString(),
     changeFrequency: "monthly",
     priority: 0.8,
   },
 
   {
-    url: "https://nhangoc.vercel.app/booking",
+    url: "https://dat-fpt.vercel.app/booking",
     lastModified: new Date().toISOString(),
     changeFrequency: "weekly",
     priority: 0.9,
   },
 
   {
-    url: "https://nhangoc.vercel.app/posts",
+    url: "https://dat-fpt.vercel.app/posts",
     lastModified: new Date().toISOString(),
     changeFrequency: "daily",
     priority: 0.9,
   },
 
   {
-    url: "https://nhangoc.vercel.app/products",
+    url: "https://dat-fpt.vercel.app/products",
     lastModified: new Date().toISOString(),
     changeFrequency: "daily",
     priority: 0.9,

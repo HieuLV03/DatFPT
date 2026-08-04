@@ -6,6 +6,6 @@ export default function robots() {
     },
 
     sitemap:
-      "https://nhangoc.vercel.app/sitemap.xml",
+      "https://dat-fpt.vercel.app/sitemap.xml",
   };
 }

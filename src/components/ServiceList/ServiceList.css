@@ -12,11 +12,13 @@
 
 }
 
+
 .serviceSwiper .swiper-wrapper{
 
     align-items:stretch;
 
 }
+
 
 .serviceSlide{
 
@@ -25,43 +27,54 @@
 
 }
 
+
 @media(min-width:768px){
 
-.serviceSlide{
-
-    width:360px;
-
-}
+    .serviceSlide{
+        width:360px;
+    }
 
 }
+
 
 @media(min-width:1200px){
 
-.serviceSlide{
-
-    width:380px;
-
-}
+    .serviceSlide{
+        width:380px;
+    }
 
 }
+
+
 
 /* ===========================
-   ACTIVE
+   ACTIVE EFFECT
 =========================== */
+
 
 .swiper-slide{
 
-    transition:
-        transform .35s ease,
-        opacity .35s ease;
+    transition:.35s ease;
 
 }
+
 
 .swiper-slide-active{
 
     z-index:10;
 
 }
+
+
+.swiper-slide-prev .serviceCard,
+.swiper-slide-next .serviceCard{
+
+    transform:scale(.93);
+
+    opacity:.75;
+
+}
+
 
 .swiper-slide-active .serviceCard{
 
@@ -71,78 +84,92 @@
 
 }
 
-.swiper-slide-prev .serviceCard,
-.swiper-slide-next .serviceCard{
 
-    transform:scale(.92);
-
-    opacity:.75;
-
-}
 
 /* ===========================
    CARD
 =========================== */
+
 
 .serviceCard{
 
     position:relative;
 
     display:flex;
+
     flex-direction:column;
 
-    height:100%;
 
-    overflow:hidden;
+    min-height:460px;
 
-    border-radius:24px;
 
     background:#fff;
 
-    transition:.35s;
+
+    border-radius:28px;
+
+
+    overflow:hidden;
+
 
     box-shadow:
-        0 15px 40px rgba(0,0,0,.08);
+
+    0 15px 45px rgba(0,0,0,.08);
+
+
+    transition:.35s ease;
 
 }
+
+
 
 .serviceCard:hover{
 
     transform:translateY(-8px);
 
     box-shadow:
-        0 25px 70px rgba(0,0,0,.15);
+
+    0 25px 70px rgba(0,0,0,.15);
 
 }
+
+
 
 /* ===========================
    IMAGE
 =========================== */
 
-.serviceImage{
 
-    position:relative;
+.serviceImage{
 
     width:100%;
 
-    aspect-ratio:16/10;
+    aspect-ratio:16/9;
 
     overflow:hidden;
 
 }
 
+
+
 .serviceImg{
 
     width:100%;
+
     height:100%;
 
-    display:block;
 
     object-fit:cover;
 
-    transition:transform .6s;
+
+    display:block;
+
+
+    transition:.6s ease;
 
 }
+
+
 
 .serviceCard:hover .serviceImg{
 
@@ -150,185 +177,283 @@
 
 }
 
+
+
 /* ===========================
    BADGE
 =========================== */
+
 
 .serviceBadge{
 
     position:absolute;
 
-    top:16px;
-    right:16px;
 
-    z-index:20;
+    top:18px;
 
-    padding:8px 16px;
+    right:18px;
+
+
+    z-index:10;
+
+
+    padding:8px 18px;
+
 
     border-radius:999px;
 
-    color:#fff;
-
-    font-size:13px;
-    font-weight:700;
 
     background:#ff4d8d;
 
+
+    color:#fff;
+
+
+    font-size:13px;
+
+    font-weight:700;
+
+
+    box-shadow:
+
+    0 8px 20px rgba(255,77,141,.35);
+
 }
+
+
 
 /* ===========================
    CONTENT
 =========================== */
 
+
 .serviceTitle{
 
-    padding:22px 22px 10px;
+    padding:24px 24px 10px;
 
 }
 
+
 .serviceTitle h2{
 
-    margin:0 0 10px;
+    margin:0 0 12px;
 
-    font-size:24px;
+
+    font-size:25px;
+
+
+    font-weight:700;
+
 
     color:#222;
 
 }
 
+
+
 .serviceTitle p{
 
     margin:0;
 
-    line-height:1.6;
 
     color:#666;
 
-}
 
-.servicePrice{
+    line-height:1.7;
 
-    padding:0 22px 20px;
 
-}
-
-.servicePrice strong{
-
-    font-size:32px;
-
-    color:#d4a373;
+    font-size:15px;
 
 }
 
-.servicePrice span{
 
-    margin-left:8px;
 
-    color:#888;
+/* ===========================
+   FEATURES
+=========================== */
 
-}
 
-.serviceInfo{
+.serviceFeatures{
+
+    padding:
+
+    10px 24px 25px;
+
 
     display:flex;
+
     flex-direction:column;
+
 
     gap:12px;
 
-    padding:0 22px 25px;
 
     color:#555;
 
+
+    font-size:15px;
+
 }
 
-.serviceInfo div{
+
+
+.serviceFeatures div{
+
 
     display:flex;
+
     align-items:center;
 
     gap:8px;
 
+
 }
+
+
 
 /* ===========================
    BUTTON
 =========================== */
 
+
 .serviceButton{
 
-    margin:auto 22px 22px;
+
+    margin:
+
+    auto 24px 24px;
+
 
     height:52px;
 
+
     display:flex;
+
+
     justify-content:center;
+
     align-items:center;
 
-    text-decoration:none;
 
     border-radius:999px;
 
-    color:#fff;
-
-    font-weight:700;
 
     background:#d4a373;
 
+
+    color:white;
+
+
+    font-weight:700;
+
+
+    text-decoration:none;
+
+
     transition:.3s;
 
+
 }
+
+
 
 .serviceButton:hover{
 
+
     background:#b8854f;
 
+
+    transform:translateY(-3px);
+
+
 }
+
+
 
 /* ===========================
    SCROLLBAR
 =========================== */
 
+
 .serviceSwiper .swiper-scrollbar{
+
 
     position:relative;
 
+
     margin:35px auto 0;
+
 
     width:220px;
 
+
     height:6px;
+
 
     border-radius:999px;
 
-    background:#ececec;
+
+    background:#eee;
+
 
 }
+
+
 
 .serviceSwiper .swiper-scrollbar-drag{
 
-    border-radius:999px;
 
     background:#d4a373;
 
+
+    border-radius:999px;
+
+
 }
+
+
 
 /* ===========================
    MOBILE
 =========================== */
 
+
 @media(max-width:768px){
+
 
 .serviceSwiper{
 
-    padding:20px 0 60px;
+    padding:
+
+    20px 0 55px;
 
 }
+
+
 
 .serviceSlide{
 
-    width:74vw;
+    width:82vw;
 
 }
+
+
+
+.serviceCard{
+
+    min-height:430px;
+
+}
+
+
+
+.serviceTitle{
+
+    padding:20px;
+
+}
+
+
 
 .serviceTitle h2{
 
@@ -336,10 +461,25 @@
 
 }
 
-.servicePrice strong{
 
-    font-size:28px;
+
+.serviceFeatures{
+
+    padding:
+
+    10px 20px 20px;
 
 }
+
+
+
+.serviceButton{
+
+    margin:
+
+    auto 20px 20px;
+
+}
+
 
 }

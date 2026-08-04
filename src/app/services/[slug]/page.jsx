@@ -52,7 +52,7 @@ export async function generateMetadata({
 
   return {
     metadataBase: new URL(
-      "https://nhangoc.vercel.app"
+      "https://dat-fpt.vercel.app"
     ),
 
     title:name,
@@ -149,7 +149,7 @@ return (
           name: data.name,
           description: data.description,
           image: [data.image],
-          url: `https://nhangoc.vercel.app/products/${data.slug}`,
+          url: `https://dat-fpt.vercel.app/products/${data.slug}`,
           productType: data.name,
           areaProducted: {
             "@type": "City",
@@ -158,10 +158,10 @@ return (
           provider: {
             "@type": "BeautySalon",
             name: "Nhà Ngọc",
-            url: "https://nhangoc.vercel.app",
+            url: "https://dat-fpt.vercel.app",
             logo: {
               "@type": "ImageObject",
-              url: "https://nhangoc.vercel.app/logo.png",
+              url: "https://dat-fpt.vercel.app/logo.png",
             },
           },
           offers: {
@@ -175,7 +175,7 @@ return (
           },
           mainEntityOfPage: {
             "@type": "WebPage",
-            "@id": `https://nhangoc.vercel.app/products/${data.slug}`,
+            "@id": `https://dat-fpt.vercel.app/products/${data.slug}`,
           },
         }),
       }}

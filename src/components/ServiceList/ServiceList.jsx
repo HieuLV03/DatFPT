@@ -1,13 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Scrollbar } from "swiper/modules";
-
-import ButtonSearch from "../ButtonSearch/ButtonSearch";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -15,258 +12,268 @@ import "swiper/css/scrollbar";
 
 import "./ServiceList.css";
 
+
 export default function ServiceList({
   services = [],
 }) {
 
-  const [keyword, setKeyword] = useState("");
 
-  const removeVietnameseTones = (str = "") =>
-    str
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/đ/g, "d")
-      .replace(/Đ/g, "D");
+return (
 
-  const filteredServices = services.filter((item) =>
-    removeVietnameseTones(item.name || "")
-      .toLowerCase()
-      .includes(
-        removeVietnameseTones(keyword)
-          .toLowerCase()
-      )
-  );
+<>
 
-  return (
-    <>
 
-  
-      {
-        filteredServices.length > 0 && (
+{
+services.length > 0 && (
 
-          <Swiper
 
-            modules={[
-              Navigation,
-              Scrollbar,
-            ]}
+<Swiper
 
-            className="serviceSwiper"
+modules={[
+Navigation,
+Scrollbar,
+]}
 
-            slidesPerView={"auto"}
 
-            centeredSlides
+className="serviceSwiper"
 
-            centeredSlidesBounds={false}
 
-            slideToClickedSlide
+slidesPerView="auto"
 
-            grabCursor
+centeredSlides
 
-            watchSlidesProgress
+slideToClickedSlide
 
-            resistanceRatio={0.6}
+grabCursor
 
-            speed={600}
+speed={600}
 
-            spaceBetween={20}
+spaceBetween={20}
 
-            scrollbar={{
-              draggable: true,
-              hide: false,
-            }}
 
-            breakpoints={{
+scrollbar={{
+draggable:true,
+hide:false,
+}}
 
-              0:{
 
-                spaceBetween:16,
+breakpoints={{
 
-              },
+0:{
+spaceBetween:16,
+},
 
-              768:{
+768:{
+spaceBetween:24,
+},
 
-                spaceBetween:24,
+1200:{
+spaceBetween:30,
+}
 
-              },
+}}
 
-              1200:{
 
-                spaceBetween:30,
+>
 
-              },
 
-            }}
 
-          >
+{
 
-            {
+services.map((item,index)=>(
 
-              filteredServices.map((item,index)=>(
 
-                <SwiperSlide
+<SwiperSlide
 
-                  key={item.id}
+key={item.id}
 
-                  className="serviceSlide"
+className="serviceSlide"
 
-                >
+>
 
-                  <motion.div
 
-                    className="serviceCard"
+<motion.div
 
-                    initial={{
-                      opacity:0,
-                      y:40,
-                    }}
+className="serviceCard"
 
-                    whileInView={{
-                      opacity:1,
-                      y:0,
-                    }}
 
-                    viewport={{
-                      once:true,
-                    }}
+initial={{
+opacity:0,
+y:40
+}}
 
-                    transition={{
-                      duration:.45,
-                      delay:index*.08,
-                    }}
 
-                  >
+whileInView={{
+opacity:1,
+y:0
+}}
 
-                    {
 
-                      item.featured && (
+viewport={{
+once:true
+}}
 
-                        <div className="serviceBadge">
-                          Khuyên dùng
-                        </div>
 
-                      )
+transition={{
+duration:.45,
+delay:index*.08
+}}
 
-                    }
 
-                    <div className="serviceImage">
+>
 
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="serviceImg"
-                      />
 
-                    </div>
 
-                    <div className="serviceTitle">
+{
+item.featured && (
 
-                      <h2>
+<div className="serviceBadge">
 
-                        {item.name}
+Khuyên dùng
 
-                      </h2>
+</div>
 
-                      <p>
+)
+}
 
-                        {
 
-                          item.description ||
 
-                          "Dịch vụ chất lượng cao, hỗ trợ tận nơi"
+<div className="serviceImage">
 
-                        }
 
-                      </p>
+{
+item.image && (
 
-                    </div>
+<img
 
-                    <div className="servicePrice">
+src={item.image}
 
-                      <strong>
+alt={item.name || "Dịch vụ FPT"}
 
-                        {
+className="serviceImg"
 
-                          Number(item.price || 0)
-                            .toLocaleString("vi-VN")
+/>
 
-                        }
+)
 
-                        đ
+}
 
-                      </strong>
 
-                      <span>
 
-                        / dịch vụ
+</div>
 
-                      </span>
 
-                    </div>
 
-                    <div className="serviceInfo">
 
-                      <div>
 
-                        ⚡ Tốc độ xử lý nhanh
+<div className="serviceTitle">
 
-                      </div>
 
-                      <div>
+<h2>
 
-                        ✓ Đội ngũ chuyên nghiệp
+{item.name}
 
-                      </div>
+</h2>
 
-                      <div>
 
-                        ✓ Hỗ trợ khách hàng 24/7
+<p>
 
-                      </div>
+{
+item.description ||
 
-                    </div>
-                                        <Link
+"Dịch vụ FPT chất lượng cao"
 
-                      href={`/services/${item.slug || item.id}`}
+}
 
-                      className="serviceButton"
+</p>
 
-                    >
 
-                      Xem chi tiết
+</div>
 
-                    </Link>
 
-                  </motion.div>
 
-                </SwiperSlide>
 
-              ))
 
-            }
+<div className="serviceFeatures">
 
-          </Swiper>
 
-        )
+{
 
-      }
+Array.isArray(item.features) &&
 
-      {
+item.features.map((feature,i)=>(
 
-        filteredServices.length === 0 && (
 
-          <div className="emptyPackage">
+<div key={i}>
 
-            Không tìm thấy dịch vụ
+✓ {feature}
 
-          </div>
+</div>
 
-        )
 
-      }
+))
 
-    </>
 
-  );
+}
+
+
+
+</div>
+
+
+
+
+
+<Link
+
+href={`/services/${item.slug || item.id}`}
+
+className="serviceButton"
+
+>
+
+
+{
+
+item.button_text ||
+
+"Xem chi tiết"
+
+}
+
+
+
+</Link>
+
+
+
+</motion.div>
+
+
+</SwiperSlide>
+
+
+
+))
+
+
+}
+
+
+
+</Swiper>
+
+
+)
+
+}
+
+
+
+</>
+
+
+);
+
 
 }
