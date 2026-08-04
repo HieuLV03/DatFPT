@@ -1,5 +1,5 @@
 import Link from "next/link";
-import ListProduct from "@/components/ProductList/ProductList";
+import ListProduct from "@/components/ServiceList/ServiceList";
 import { supabase } from "@/lib/supabase";
 import Image from "next/image";
 import "./page.css";

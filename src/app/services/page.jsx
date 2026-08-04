@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import Image from "next/image";
-import ListProduct from "../../components/ProductList/ProductList";
+import ListService from "../../components/ServiceList/ServiceList";
 import "./page.css";
 import BackButton from "@/components/BackButton/BackButton";
 import ScrollReveal from "@/components/ScrollReveal/ScrollReveal";
@@ -13,10 +13,10 @@ export const revalidate = 600;
 export default async function HomePage() {
 
 
- const [productRes, postRes] = await Promise.all([
+ const [serviceRes, postRes] = await Promise.all([
 
   supabase
-    .from("products")
+    .from("services")
     .select("*")
     .eq("status","available")
     .order("created_at",{ascending:false}),
@@ -32,7 +32,7 @@ export default async function HomePage() {
  ]);
 
 
-const products = productRes.data || [];
+const services = serviceRes.data || [];
 const posts = postRes.data || [];
 
 
@@ -41,7 +41,6 @@ return (
 <main className="home">
 
 
-{/* PRODUCT */}
 
 <ScrollReveal>
 
@@ -59,7 +58,7 @@ Sản phẩm
 </div>
 
 
-<ListProduct products={products}/>
+<ListService services={services}/>
 
 
 </section>

@@ -40,7 +40,7 @@ const [
           </div>
         </Link>
 
-        <Link href="/admin/products" className="card">
+        <Link href="/admin/services" className="card">
           <div className="cardIcon">📦</div>
           <div>
             <h3>Sản phẩm</h3>

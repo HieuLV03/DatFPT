@@ -4,7 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "crmznirqgmumozfmuyiv.supabase.co",
+        hostname: "udpwtizixjsiimjviooe.supabase.co",
       },
     ],
   },

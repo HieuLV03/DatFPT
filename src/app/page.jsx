@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import Image from "next/image";
-import ListProduct from "../components/ProductList/ProductList";
+import ListService from "../components/ServiceList/ServiceList";
 import "./page.css";
 import ScrollReveal from "@/components/ScrollReveal/ScrollReveal";
 import Slider from "@/components/Slider/Slider";
@@ -10,7 +10,7 @@ export const revalidate = 600;
 
 export default async function HomePage() {
 
-  const [sliderRes, productRes, postRes] =
+  const [sliderRes, serviceRes, postRes] =
     await Promise.all([
 
       supabase
@@ -22,10 +22,8 @@ export default async function HomePage() {
         .limit(5),
 
       supabase
-        .from("products")
+        .from("services")
         .select("*")
-        .eq("status", "available")
-        .eq("featured", true)
         .order("created_at", {
           ascending: false,
         })
@@ -45,7 +43,7 @@ console.log("sliderRes", sliderRes);
 console.log("sliderData", sliderRes.data);
 console.log("sliderError", sliderRes.error);
   const sliders = sliderRes.data || [];
-  const products = productRes.data || [];
+  const services = serviceRes.data || [];
   const posts = postRes.data || [];
 
   return (
@@ -89,9 +87,9 @@ console.log("sliderError", sliderRes.error);
 
         </div>
 
-      <ListProduct products={products} />
+      <ListService services={services} />
 <div className="viewMoreWrap">
-  <Link href="/products" className="viewMoreBtn">
+  <Link href="/services" className="viewMoreBtn">
     Xem thêm dịch vụ
         <span>→</span>
 
