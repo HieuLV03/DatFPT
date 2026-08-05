@@ -12,277 +12,177 @@ import "swiper/css/scrollbar";
 
 import "./ServiceList.css";
 
-
 export default function ServiceList({
   services = [],
 }) {
 
+  return (
+    <>
+      {services.length > 0 && (
 
-return (
+        <Swiper
+          modules={[
+            Navigation,
+            Scrollbar,
+          ]}
 
-<>
+          className="serviceSwiper"
 
+          centeredSlides
+          centeredSlidesBounds
+          watchOverflow
 
-{
-services.length > 0 && (
+          grabCursor
+          speed={600}
 
+          scrollbar={{
+            draggable: true,
+            hide: false,
+          }}
 
-<Swiper
+          breakpoints={{
 
-modules={[
-Navigation,
-Scrollbar,
-]}
+            // MOBILE
+            0: {
+              slidesPerView: 1.4,
+              spaceBetween: 16,
+            },
 
+            // TABLET
+            768: {
+              slidesPerView: 3,
+              spaceBetween: 24,
+            },
 
-className="serviceSwiper"
+            // DESKTOP
+            1200: {
+              slidesPerView: 5,
+              spaceBetween: 30,
+            },
 
+          }}
 
-slidesPerView="auto"
+        >
 
-centeredSlides
+          {services.map((item, index) => (
 
-slideToClickedSlide
+            <SwiperSlide
+              key={item.id}
+              className="serviceSlide"
+            >
 
-grabCursor
+              <motion.div
 
-speed={600}
+                className="serviceCard"
 
-spaceBetween={20}
+                initial={{
+                  opacity: 0,
+                  y: 40,
+                }}
 
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
 
-scrollbar={{
-draggable:true,
-hide:false,
-}}
+                viewport={{
+                  once: true,
+                }}
 
+                transition={{
+                  duration: .45,
+                  delay: index * .08,
+                }}
 
-breakpoints={{
+              >
 
-0:{
-spaceBetween:16,
-},
+                {item.badge && (
+                  <div className="serviceBadge">
+                    {item.badge}
+                  </div>
+                )}
 
-768:{
-spaceBetween:24,
-},
+                <div className="serviceImage">
 
-1200:{
-spaceBetween:30,
-}
+                  {item.image && (
 
-}}
+                    <img
+                      src={item.image}
+                      alt={item.name || "Dịch vụ FPT"}
+                      className="serviceImg"
+                    />
 
+                  )}
 
->
+                </div>
 
+                <div className="serviceTitle">
 
+                  <h2>
+                    {item.name}
+                  </h2>
 
-{
+                  <p>
+                    {item.description}
+                  </p>
 
-services.map((item,index)=>(
+                  {/* SPEED từ DB */}
+                  {item.speed && (
+                    <div className="serviceSpeed">
+                      🚀 {item.speed}
+                    </div>
+                  )}
 
+                  <div className="servicePrice">
 
-<SwiperSlide
+                    {item.old_price && (
 
-key={item.id}
+                      <span className="oldPrice">
+                        {Number(item.old_price).toLocaleString("vi-VN")}đ
+                      </span>
 
-className="serviceSlide"
+                    )}
 
->
+                    <span className="newPrice">
+                      {Number(item.price).toLocaleString("vi-VN")}đ/tháng
+                    </span>
 
+                  </div>
 
-<motion.div
+                </div>
 
-className="serviceCard"
+                <div className="serviceFeatures">
 
+                  {Array.isArray(item.features) &&
+                    item.features.map((feature, i) => (
 
-initial={{
-opacity:0,
-y:40
-}}
+                      <div key={i}>
+                        ✓ {feature}
+                      </div>
 
+                    ))}
 
-whileInView={{
-opacity:1,
-y:0
-}}
+                </div>
 
+                <Link
+                  href={`/services/${item.slug || item.id}`}
+                  className="serviceButton"
+                >
 
-viewport={{
-once:true
-}}
+                  {item.button_text || "Xem chi tiết"}
 
+                </Link>
 
-transition={{
-duration:.45,
-delay:index*.08
-}}
+              </motion.div>
 
+            </SwiperSlide>
 
->
+          ))}
 
+        </Swiper>
 
-
-{
-item.featured && (
-
-<div className="serviceBadge">
-
-Khuyên dùng
-
-</div>
-
-)
-}
-
-
-
-<div className="serviceImage">
-
-
-{
-item.image && (
-
-<img
-
-src={item.image}
-
-alt={item.name || "Dịch vụ FPT"}
-
-className="serviceImg"
-
-/>
-
-)
-
-}
-
-
-
-</div>
-
-
-
-
-
-<div className="serviceTitle">
-
-
-<h2>
-
-{item.name}
-
-</h2>
-
-
-<p>
-
-{
-item.description
-
-
-}
-
-</p>
-<div className="servicePrice">
-  {item.old_price && (
-    <span className="oldPrice">
-      {Number(item.old_price).toLocaleString("vi-VN")}đ
-    </span>
-  )}
-
-  <span className="newPrice">
-    {Number(item.price).toLocaleString("vi-VN")}đ/tháng
-  </span>
-</div>
-
-</div>
-
-
-
-
-
-<div className="serviceFeatures">
-
-
-{
-
-Array.isArray(item.features) &&
-
-item.features.map((feature,i)=>(
-
-
-<div key={i}>
-
-✓ {feature}
-
-</div>
-
-
-))
-
-
-}
-
-
-
-</div>
-
-
-
-
-
-<Link
-
-href={`/services/${item.slug || item.id}`}
-
-className="serviceButton"
-
->
-
-
-{
-
-item.button_text ||
-
-"Xem chi tiết"
-
-}
-
-
-
-</Link>
-
-
-
-</motion.div>
-
-
-</SwiperSlide>
-
-
-
-))
-
-
-}
-
-
-
-</Swiper>
-
-
-)
-
-}
-
-
-
-</>
-
-
-);
-
+      )}
+    </>
+  );
 
 }

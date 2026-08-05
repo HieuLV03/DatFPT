@@ -90,7 +90,7 @@ if (loading || isAdminPage) {
       {role === "admin" && (
         <div className="adminBar">
           <Link href="/admin/posts">➕ Bài viết</Link>
-          <Link href="/admin/products">➕ Sản phẩm</Link>
+          <Link href="/admin/services">➕ Dịch vụ</Link>
             <Link href="/admin/sliders">
       ➕ Slider
     </Link>
@@ -124,7 +124,7 @@ if (loading || isAdminPage) {
 
         <nav className={`nav ${menuOpen ? "active" : ""}`}>
           <Link href="/" onClick={() => setMenuOpen(false)}>Trang chủ</Link>
-          <Link href="/products" onClick={() => setMenuOpen(false)}>Sản phẩm</Link>
+          <Link href="/services" onClick={() => setMenuOpen(false)}>Dịch vụ</Link>
                     <Link href="/categories" onClick={() => setMenuOpen(false)}>Danh mục</Link>
 
           <Link href="/posts" onClick={() => setMenuOpen(false)}>Bài viết</Link>

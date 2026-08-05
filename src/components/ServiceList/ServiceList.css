@@ -1,17 +1,16 @@
-/* ===========================
-   SWIPER
-=========================== */
+/* =====================================================
+   SERVICE SWIPER
+===================================================== */
 
 .serviceSwiper{
 
     width:100%;
 
+    padding:42px 0 80px;
+
     overflow:visible;
 
-    padding:30px 0 70px;
-
 }
-
 
 .serviceSwiper .swiper-wrapper{
 
@@ -19,77 +18,54 @@
 
 }
 
-
 .serviceSlide{
 
-    width:78vw;
-    max-width:420px;
+    height:auto;
+
+    transition:
+        transform .35s ease,
+        opacity .35s ease;
 
 }
 
-
-@media(min-width:768px){
-
-    .serviceSlide{
-        width:360px;
-    }
-
-}
-
-
-@media(min-width:1200px){
-
-    .serviceSlide{
-        width:380px;
-    }
-
-}
-
-
-
-/* ===========================
+/* =====================================================
    ACTIVE EFFECT
-=========================== */
-
+===================================================== */
 
 .swiper-slide{
 
-    transition:.35s ease;
+    opacity:.72;
+
+    transition:
+        transform .4s,
+        opacity .4s;
 
 }
 
-
 .swiper-slide-active{
+
+    opacity:1;
 
     z-index:10;
 
 }
 
-
 .swiper-slide-prev .serviceCard,
 .swiper-slide-next .serviceCard{
 
-    transform:scale(.93);
-
-    opacity:.75;
+    transform:scale(.95);
 
 }
-
 
 .swiper-slide-active .serviceCard{
 
     transform:scale(1);
 
-    opacity:1;
-
 }
 
-
-
-/* ===========================
+/* =====================================================
    CARD
-=========================== */
-
+===================================================== */
 
 .serviceCard{
 
@@ -99,48 +75,86 @@
 
     flex-direction:column;
 
+    height:100%;
 
-    min-height:460px;
-
-
-    background:#fff;
-
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.98),
+            rgba(250,252,255,.98)
+        );
 
     border-radius:28px;
 
-
     overflow:hidden;
 
+    border:1px solid rgba(18,96,255,.08);
 
     box-shadow:
+        0 10px 35px rgba(15,23,42,.06);
 
-    0 15px 45px rgba(0,0,0,.08);
+    backdrop-filter:blur(10px);
 
-
-    transition:.35s ease;
+    transition:
+        transform .35s,
+        box-shadow .35s,
+        border-color .35s;
 
 }
-
-
 
 .serviceCard:hover{
 
-    transform:translateY(-8px);
+    transform:translateY(-10px);
+
+    border-color:rgba(11,95,255,.18);
 
     box-shadow:
-
-    0 25px 70px rgba(0,0,0,.15);
+        0 22px 65px rgba(15,23,42,.12),
+        0 8px 24px rgba(11,95,255,.12);
 
 }
 
+/* viền sáng */
 
+.serviceCard::before{
 
-/* ===========================
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    border-radius:28px;
+
+    padding:1px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(11,95,255,.25),
+            transparent,
+            rgba(0,198,255,.18)
+        );
+
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+
+    -webkit-mask-composite:xor;
+
+    mask-composite:exclude;
+
+    pointer-events:none;
+
+}
+
+/* =====================================================
    IMAGE
-=========================== */
-
+===================================================== */
 
 .serviceImage{
+
+    position:relative;
 
     width:100%;
 
@@ -148,9 +162,9 @@
 
     overflow:hidden;
 
+    background:#eef5ff;
+
 }
-
-
 
 .serviceImg{
 
@@ -158,18 +172,13 @@
 
     height:100%;
 
-
     object-fit:cover;
 
-
-    display:block;
-
-
-    transition:.6s ease;
+    transition:
+        transform .8s ease,
+        filter .4s ease;
 
 }
-
-
 
 .serviceCard:hover .serviceImg{
 
@@ -177,325 +186,432 @@
 
 }
 
+/* overlay tối nhẹ */
 
+.serviceImage::after{
 
-/* ===========================
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+        linear-gradient(
+
+            to top,
+
+            rgba(0,0,0,.18),
+
+            transparent 45%
+
+        );
+
+}
+
+/* =====================================================
    BADGE
-=========================== */
-
+===================================================== */
 
 .serviceBadge{
 
     position:absolute;
 
-
     top:18px;
 
     right:18px;
 
+    z-index:20;
 
-    z-index:10;
-
-
-    padding:8px 18px;
-
+    padding:9px 18px;
 
     border-radius:999px;
 
+    background:
 
-    background:#ff4d8d;
+        linear-gradient(
 
+            135deg,
+
+            #005BFF,
+
+            #00C6FF
+
+        );
 
     color:#fff;
 
-
-    font-size:13px;
+    font-size:12px;
 
     font-weight:700;
 
+    letter-spacing:.8px;
+
+    text-transform:uppercase;
+
+    overflow:hidden;
+
+    border:1px solid rgba(255,255,255,.25);
 
     box-shadow:
 
-    0 8px 20px rgba(255,77,141,.35);
+        0 12px 30px rgba(0,91,255,.35);
 
 }
 
+/* dải sáng */
 
+.serviceBadge::before{
 
-/* ===========================
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:-70%;
+
+    width:40%;
+
+    height:100%;
+
+    background:
+
+        linear-gradient(
+
+            120deg,
+
+            transparent,
+
+            rgba(255,255,255,.95),
+
+            transparent
+
+        );
+
+    transform:skewX(-25deg);
+
+    animation:badgeShine 4.5s infinite;
+
+}
+
+@keyframes badgeShine{
+
+    0%{
+
+        left:-70%;
+
+    }
+
+    18%{
+
+        left:140%;
+
+    }
+
+    100%{
+
+        left:140%;
+
+    }
+
+}
+
+/* =====================================================
    CONTENT
-=========================== */
-
+===================================================== */
 
 .serviceTitle{
 
-    padding:24px 24px 10px;
+    padding:26px 24px 12px;
 
 }
-
 
 .serviceTitle h2{
 
-    margin:0 0 12px;
+    margin:0 0 14px;
 
+    color:#0f172a;
 
-    font-size:25px;
-
+    font-size:24px;
 
     font-weight:700;
 
+    line-height:1.3;
 
-    color:#222;
+    letter-spacing:-.4px;
 
 }
-
-
 
 .serviceTitle p{
 
     margin:0;
 
-
-    color:#666;
-
-
-    line-height:1.7;
-
+    color:#64748b;
 
     font-size:15px;
 
+    line-height:1.75;
+
 }
+/* =====================================================
+   PRICE
+===================================================== */
 
-
-
-/* ===========================
-   FEATURES
-=========================== */
-
-
-.serviceFeatures{
-
-    padding:
-
-    10px 24px 25px;
-
+.servicePrice{
 
     display:flex;
 
-    flex-direction:column;
+    flex-wrap:wrap;
 
+    align-items:flex-end;
 
-    gap:12px;
+    gap:10px;
 
+    margin:22px 0 18px;
 
-    color:#555;
+}
 
+.oldPrice{
+
+    color:#94a3b8;
 
     font-size:15px;
 
+    font-weight:500;
+
+    text-decoration:line-through;
+
 }
 
+.newPrice{
 
+    font-size:30px;
 
-.serviceFeatures div{
+    font-weight:800;
 
+    color:#005BFF;
 
-    display:flex;
+    line-height:1;
+
+    letter-spacing:-1px;
+
+}
+
+.newPrice::after{
+
+    content:"";
+
+    display:block;
+
+    width:100%;
+
+    height:3px;
+
+    margin-top:6px;
+
+    border-radius:999px;
+
+    background:linear-gradient(
+        90deg,
+        #005BFF,
+        #00C6FF
+    );
+
+    opacity:.18;
+
+}
+
+/* =====================================================
+   SPEED CHIP
+===================================================== */
+
+.serviceSpeed{
+
+    display:inline-flex;
 
     align-items:center;
 
     gap:8px;
 
+    margin-bottom:18px;
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    background:#eef6ff;
+
+    border:1px solid rgba(0,91,255,.15);
+
+    color:#005BFF;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    width:max-content;
+
+    transition:.3s;
 
 }
 
+.serviceCard:hover .serviceSpeed{
 
+    background:#005BFF;
 
-/* ===========================
-   BUTTON
-=========================== */
+    color:#fff;
 
+    border-color:#005BFF;
 
-.serviceButton{
+}
 
+/* =====================================================
+   FEATURES
+===================================================== */
 
-    margin:
-
-    auto 24px 24px;
-
-
-    height:52px;
-
+.serviceFeatures{
 
     display:flex;
 
+    flex-direction:column;
+
+    gap:14px;
+
+    padding:0 24px 26px;
+
+}
+
+.serviceFeatures div{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    color:#475569;
+
+    font-size:15px;
+
+    line-height:1.6;
+
+}
+
+.serviceFeatures div::before{
+
+    content:"";
+
+    width:8px;
+
+    height:8px;
+
+    border-radius:50%;
+
+    flex-shrink:0;
+
+    background:linear-gradient(
+        135deg,
+        #005BFF,
+        #00C6FF
+    );
+
+    box-shadow:
+        0 0 10px rgba(0,91,255,.35);
+
+}
+
+/* =====================================================
+   BUTTON
+===================================================== */
+
+.serviceButton{
+
+    margin:auto 24px 24px;
+
+    height:56px;
+
+    display:flex;
 
     justify-content:center;
 
     align-items:center;
 
-
     border-radius:999px;
 
+    background:linear-gradient(
+        135deg,
+        #005BFF,
+        #00C6FF
+    );
 
-    background:#d4a373;
+    color:#fff;
 
-
-    color:white;
-
+    font-size:15px;
 
     font-weight:700;
 
+    letter-spacing:.3px;
 
     text-decoration:none;
 
+    transition:
+        transform .3s,
+        box-shadow .3s,
+        filter .3s;
 
-    transition:.3s;
-
+    box-shadow:
+        0 12px 30px rgba(0,91,255,.25);
 
 }
-
-
 
 .serviceButton:hover{
 
+    transform:translateY(-4px);
 
-    background:#b8854f;
+    filter:brightness(1.05);
 
-
-    transform:translateY(-3px);
-
+    box-shadow:
+        0 20px 40px rgba(0,91,255,.35);
 
 }
 
+.serviceButton:active{
 
+    transform:translateY(-1px);
 
-/* ===========================
+}
+
+/* =====================================================
    SCROLLBAR
-=========================== */
-
+===================================================== */
 
 .serviceSwiper .swiper-scrollbar{
 
-
-    position:relative;
-
-
-    margin:35px auto 0;
-
-
-    width:220px;
-
+    width:240px;
 
     height:6px;
 
+    margin:38px auto 0;
 
     border-radius:999px;
 
-
-    background:#eee;
-
+    background:#e5edf8;
 
 }
-
-
 
 .serviceSwiper .swiper-scrollbar-drag{
 
-
-    background:#d4a373;
-
-
     border-radius:999px;
 
+    background:linear-gradient(
+        90deg,
+        #005BFF,
+        #00C6FF
+    );
 
-}
-.servicePrice{
-    margin:16px 0;
-    font-size:28px;
-    font-weight:700;
-    color:#ff6b00;
-}
-
-.oldPrice{
-    margin-right:10px;
-    color:#999;
-    text-decoration:line-through;
-    font-size:16px;
-}
-
-.newPrice{
-    color:#ff6b00;
-}
-
-
-/* ===========================
-   MOBILE
-=========================== */
-
-
-@media(max-width:768px){
-
-
-.serviceSwiper{
-
-    padding:
-
-    20px 0 55px;
-
-}
-
-
-
-.serviceSlide{
-
-    width:82vw;
-
-}
-
-
-
-.serviceCard{
-
-    min-height:430px;
-
-}
-
-
-
-.serviceTitle{
-
-    padding:20px;
-
-}
-
-
-
-.serviceTitle h2{
-
-    font-size:22px;
-
-}
-
-
-
-.serviceFeatures{
-
-    padding:
-
-    10px 20px 20px;
-
-}
-
-
-
-.serviceButton{
-
-    margin:
-
-    auto 20px 20px;
-
-}
-
+    box-shadow:
+        0 0 16px rgba(0,91,255,.3);
 
 }
