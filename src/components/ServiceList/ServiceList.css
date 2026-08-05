@@ -1,23 +1,92 @@
 /* =====================================================
-   SERVICE SWIPER
+   SERVICE CATEGORY
 ===================================================== */
 
-.serviceSwiper{
 
+.serviceByCategory{
     width:100%;
+}
 
-    padding:42px 0 80px;
 
-    overflow:hidden;
+.serviceCategorySection{
+
+    margin-bottom:90px;
 
 }
 
 
-.serviceSwiper .swiper-wrapper{
+/* =====================================================
+   CATEGORY TITLE
+===================================================== */
 
-    align-items:stretch;
+
+.categoryHeader{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin-bottom:35px;
 
 }
+
+
+
+.categoryTitle{
+
+    margin:0;
+
+    position:relative;
+
+    font-family:var(--font-playfair),serif;
+
+    font-size:42px;
+
+    font-weight:700;
+
+    color:#222;
+
+    text-align:center;
+
+}
+
+
+
+.categoryTitle::after{
+
+    content:"";
+
+    display:block;
+
+    width:75px;
+
+    height:3px;
+
+    margin:14px auto 0;
+
+    border-radius:999px;
+
+    background:
+
+    linear-gradient(
+        90deg,
+        #c8a96b,
+        #f3dfaa
+    );
+
+}
+
+
+
+
+
+/* =====================================================
+   SWIPER
+===================================================== */
+
+
 .serviceSwiperWrapper{
 
     width:100%;
@@ -25,9 +94,34 @@
     overflow:hidden;
 
 }
+
+
+
+.serviceSwiper{
+
+    width:100%;
+
+    overflow:visible;
+
+    padding:20px 0 70px;
+
+}
+
+
+
+.serviceSwiper .swiper-wrapper{
+
+    align-items:stretch;
+
+}
+
+
+
+
 /* =====================================================
-   CARD SIZE
+   SLIDE SIZE
 ===================================================== */
+
 
 .serviceSlide{
 
@@ -35,14 +129,13 @@
 
     height:auto;
 
-    flex-shrink:0;
-
     display:flex;
 
 }
 
 
-.serviceCard{
+
+.serviceSlide .serviceCard{
 
     width:100%;
 
@@ -50,46 +143,11 @@
 
 
 
-@media(min-width:768px){
-
-    .serviceSlide{
-
-        width:340px;
-
-    }
-
-}
-
-
-
 @media(min-width:1200px){
 
     .serviceSlide{
 
-        width:360px;
-
-    }
-
-}
-/* =====================================================
-   SLIDE WIDTH
-===================================================== */
-
-
-
-.serviceCard{
-
-    width:100%;
-
-}
-
-
-
-@media(min-width:768px){
-
-    .serviceSlide{
-
-        width:340px;
+        width:350px;
 
     }
 
@@ -97,68 +155,41 @@
 
 
 
-@media(min-width:1200px){
 
-    .serviceSlide{
-
-        width:360px;
-
-    }
-
-}
-/* =====================================================
-   SLIDE WIDTH
-===================================================== */
-
-
-
-/* TABLET */
-@media(min-width:768px){
-
-    .serviceSlide{
-        width:300px;
-    }
-
-}
-
-
-/* DESKTOP */
-@media(min-width:1200px){
-
-    .serviceSlide{
-        width:260px;
-    }
-
-}
 
 /* =====================================================
-   ACTIVE EFFECT
+   SWIPER ACTIVE
 ===================================================== */
+
 
 .swiper-slide{
 
-    opacity:.72;
+    opacity:.7;
 
     transition:
-        transform .4s,
-        opacity .4s;
+    opacity .35s,
+    transform .35s;
 
 }
+
+
 
 .swiper-slide-active{
 
     opacity:1;
 
-    z-index:10;
-
 }
+
+
 
 .swiper-slide-prev .serviceCard,
 .swiper-slide-next .serviceCard{
 
-    transform:scale(.95);
+    transform:scale(.96);
 
 }
+
+
 
 .swiper-slide-active .serviceCard{
 
@@ -166,9 +197,14 @@
 
 }
 
+
+
+
+
 /* =====================================================
    CARD
 ===================================================== */
+
 
 .serviceCard{
 
@@ -178,48 +214,56 @@
 
     flex-direction:column;
 
-    height:100%;
 
-    background:
-        linear-gradient(
-            180deg,
-            rgba(255,255,255,.98),
-            rgba(250,252,255,.98)
-        );
+    min-height:560px;
+
+
+    background:#fff;
+
 
     border-radius:28px;
 
-    overflow:hidden;
 
-    border:1px solid rgba(18,96,255,.08);
+    overflow:visible;
+
+
+    border:
+
+    1px solid rgba(200,169,107,.18);
+
+
 
     box-shadow:
-        0 10px 35px rgba(15,23,42,.06);
 
-    backdrop-filter:blur(10px);
+    0 20px 60px rgba(0,0,0,.08);
 
-    transition:
-        transform .35s,
-        box-shadow .35s,
-        border-color .35s;
+
+
+    transition:.35s;
+
 
 }
+
+
 
 .serviceCard:hover{
 
+
     transform:translateY(-10px);
 
-    border-color:rgba(11,95,255,.18);
 
     box-shadow:
-        0 22px 65px rgba(15,23,42,.12),
-        0 8px 24px rgba(11,95,255,.12);
+
+    0 30px 80px rgba(0,0,0,.13);
+
 
 }
 
-/* viền sáng */
+
+
 
 .serviceCard::before{
+
 
     content:"";
 
@@ -231,57 +275,82 @@
 
     padding:1px;
 
+
     background:
-        linear-gradient(
-            135deg,
-            rgba(11,95,255,.25),
-            transparent,
-            rgba(0,198,255,.18)
-        );
+
+    linear-gradient(
+        135deg,
+        rgba(200,169,107,.35),
+        transparent
+    );
+
 
     -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
+
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+
 
     -webkit-mask-composite:xor;
 
     mask-composite:exclude;
 
+
     pointer-events:none;
 
+
 }
+
+
+
+
 
 /* =====================================================
    IMAGE
 ===================================================== */
 
+
 .serviceImage{
+
 
     position:relative;
 
     width:100%;
 
-    aspect-ratio:16/9;
 
     overflow:hidden;
 
-    background:#eef5ff;
+
+    border-radius:
+
+    28px 28px 0 0;
+
+
+    background:#f7f7f7;
+
 
 }
+
+
 
 .serviceImg{
 
+
     width:100%;
 
-    height:100%;
+    height:auto;
+
+    display:block;
 
     object-fit:cover;
 
-    transition:
-        transform .8s ease,
-        filter .4s ease;
+
+    transition:.5s;
+
 
 }
+
+
 
 .serviceCard:hover .serviceImg{
 
@@ -289,9 +358,11 @@
 
 }
 
-/* overlay tối nhẹ */
+
+
 
 .serviceImage::after{
+
 
     content:"";
 
@@ -299,424 +370,699 @@
 
     inset:0;
 
+
     background:
 
-        linear-gradient(
+    linear-gradient(
+        to top,
+        rgba(0,0,0,.18),
+        transparent 45%
+    );
 
-            to top,
-
-            rgba(0,0,0,.18),
-
-            transparent 45%
-
-        );
 
 }
+
+
+
+
 
 /* =====================================================
    BADGE
 ===================================================== */
 
+
 .serviceBadge{
+
 
     position:absolute;
 
-    top:18px;
 
-    right:18px;
+    top:-15px;
+
+    right:-5px;
+
 
     z-index:20;
 
-    padding:9px 18px;
+
+    padding:
+
+    9px 18px;
+
 
     border-radius:999px;
 
+
     background:
 
-        linear-gradient(
+    linear-gradient(
+        135deg,
+        #c8a96b,
+        #f3dfaa
+    );
 
-            135deg,
 
-            #005BFF,
+    color:#222;
 
-            #00C6FF
-
-        );
-
-    color:#fff;
 
     font-size:12px;
 
-    font-weight:700;
 
-    letter-spacing:.8px;
+    font-weight:800;
+
+
+    letter-spacing:1px;
+
 
     text-transform:uppercase;
 
-    overflow:hidden;
 
-    border:1px solid rgba(255,255,255,.25);
+    border:2px solid #fff;
+
 
     box-shadow:
 
-        0 12px 30px rgba(0,91,255,.35);
+    0 12px 35px rgba(200,169,107,.35);
+
+
+    overflow:hidden;
+
 
 }
 
-/* dải sáng */
+
 
 .serviceBadge::before{
 
+
     content:"";
 
+
     position:absolute;
+
 
     top:0;
 
     left:-70%;
 
+
     width:40%;
+
 
     height:100%;
 
+
     background:
 
-        linear-gradient(
+    linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,.8),
+        transparent
+    );
 
-            120deg,
-
-            transparent,
-
-            rgba(255,255,255,.95),
-
-            transparent
-
-        );
 
     transform:skewX(-25deg);
 
+
     animation:badgeShine 4.5s infinite;
 
+
 }
+
+
 
 @keyframes badgeShine{
 
-    0%{
 
-        left:-70%;
+0%{
 
-    }
-
-    18%{
-
-        left:140%;
-
-    }
-
-    100%{
-
-        left:140%;
-
-    }
+left:-70%;
 
 }
+
+
+20%{
+
+left:140%;
+
+}
+
+
+100%{
+
+left:140%;
+
+}
+
+
+}
+
+
+
+
 
 /* =====================================================
    CONTENT
 ===================================================== */
 
+
 .serviceTitle{
 
-    padding:26px 24px 12px;
+
+    padding:
+
+    25px 24px 10px;
+
 
 }
+
+
 
 .serviceTitle h2{
 
-    margin:0 0 14px;
 
-    color:#0f172a;
+    margin:0 0 12px;
+
 
     font-size:24px;
 
+
     font-weight:700;
 
-    line-height:1.3;
 
-    letter-spacing:-.4px;
+    line-height:1.35;
+
+
+    color:#222;
+
+
+    font-family:
+    var(--font-playfair),
+    serif;
+
 
 }
+
+
 
 .serviceTitle p{
 
+
     margin:0;
 
-    color:#64748b;
+
+    color:#777;
+
 
     font-size:15px;
 
-    line-height:1.75;
+
+    line-height:1.7;
+
 
 }
+
+
+
+
 /* =====================================================
    PRICE
 ===================================================== */
 
+
 .servicePrice{
+
 
     display:flex;
 
     flex-wrap:wrap;
 
-    align-items:flex-end;
+    align-items:center;
+
 
     gap:10px;
 
-    margin:22px 0 18px;
+
+    margin-top:20px;
+
 
 }
 
+
+
 .oldPrice{
 
-    color:#94a3b8;
 
-    font-size:15px;
+    color:#999;
 
-    font-weight:500;
+    font-size:14px;
 
     text-decoration:line-through;
 
 }
 
+
+
 .newPrice{
+
+
+    color:#c8a96b;
+
 
     font-size:30px;
 
+
     font-weight:800;
 
-    color:#005BFF;
-
-    line-height:1;
-
-    letter-spacing:-1px;
 
 }
 
-.newPrice::after{
 
-    content:"";
 
-    display:block;
 
-    width:100%;
-
-    height:3px;
-
-    margin-top:6px;
-
-    border-radius:999px;
-
-    background:linear-gradient(
-        90deg,
-        #005BFF,
-        #00C6FF
-    );
-
-    opacity:.18;
-
-}
 
 /* =====================================================
-   SPEED CHIP
+   SPEED
 ===================================================== */
+
 
 .serviceSpeed{
 
+
     display:inline-flex;
 
-    align-items:center;
-
-    gap:8px;
-
-    margin-bottom:18px;
-
-    padding:8px 14px;
-
-    border-radius:999px;
-
-    background:#eef6ff;
-
-    border:1px solid rgba(0,91,255,.15);
-
-    color:#005BFF;
-
-    font-size:14px;
-
-    font-weight:700;
 
     width:max-content;
 
-    transition:.3s;
+
+    margin-top:15px;
+
+
+    padding:
+
+    8px 14px;
+
+
+    border-radius:999px;
+
+
+    background:#faf7f2;
+
+
+    border:1px solid #ead7aa;
+
+
+    color:#9c7b3d;
+
+
+    font-size:14px;
+
+
+    font-weight:700;
+
 
 }
 
-.serviceCard:hover .serviceSpeed{
 
-    background:#005BFF;
 
-    color:#fff;
 
-    border-color:#005BFF;
-
-}
 
 /* =====================================================
    FEATURES
 ===================================================== */
 
+
 .serviceFeatures{
 
+
     display:flex;
+
 
     flex-direction:column;
 
+
     gap:14px;
 
-    padding:0 24px 26px;
+
+    padding:
+
+    0 24px 25px;
+
 
 }
+
+
 
 .serviceFeatures div{
 
+
     display:flex;
 
-    align-items:center;
 
-    gap:10px;
+    gap:12px;
 
-    color:#475569;
+
+    color:#555;
+
 
     font-size:15px;
 
+
     line-height:1.6;
+
 
 }
 
-.serviceFeatures div::before{
 
-    content:"";
 
-    width:8px;
+.featureIcon{
 
-    height:8px;
 
-    border-radius:50%;
+    width:22px;
+
+
+    height:22px;
+
 
     flex-shrink:0;
 
-    background:linear-gradient(
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    justify-content:center;
+
+
+    border-radius:50%;
+
+
+    background:
+
+    linear-gradient(
         135deg,
-        #005BFF,
-        #00C6FF
+        #c8a96b,
+        #f3dfaa
     );
 
-    box-shadow:
-        0 0 10px rgba(0,91,255,.35);
+
+    color:#222;
+
+
+    font-size:12px;
+
+
+    font-weight:800;
+
 
 }
+
+
+
+
 
 /* =====================================================
    BUTTON
 ===================================================== */
 
+
 .serviceButton{
 
-    margin:auto 24px 24px;
 
-    height:56px;
+    margin:
+
+    auto 24px 24px;
+
+
+    height:55px;
+
 
     display:flex;
 
+
     justify-content:center;
+
 
     align-items:center;
 
+
     border-radius:999px;
 
-    background:linear-gradient(
-        135deg,
-        #005BFF,
-        #00C6FF
-    );
-
-    color:#fff;
-
-    font-size:15px;
-
-    font-weight:700;
-
-    letter-spacing:.3px;
 
     text-decoration:none;
 
-    transition:
-        transform .3s,
-        box-shadow .3s,
-        filter .3s;
 
-    box-shadow:
-        0 12px 30px rgba(0,91,255,.25);
+    color:white;
+
+
+    font-weight:700;
+
+
+    background:
+
+
+    linear-gradient(
+        135deg,
+        #222,
+        #555
+    );
+
+
+    transition:.3s;
+
 
 }
+
+
 
 .serviceButton:hover{
 
-    transform:translateY(-4px);
 
-    filter:brightness(1.05);
+    background:
 
-    box-shadow:
-        0 20px 40px rgba(0,91,255,.35);
+    linear-gradient(
+        135deg,
+        #c8a96b,
+        #f3dfaa
+    );
+
+
+    color:#222;
+
+
+    transform:translateY(-3px);
+
 
 }
 
-.serviceButton:active{
 
-    transform:translateY(-1px);
 
-}
+
 
 /* =====================================================
    SCROLLBAR
 ===================================================== */
 
+
 .serviceSwiper .swiper-scrollbar{
+
 
     position:relative;
 
-    width:240px;
 
-    height:6px;
+    width:220px;
+
+
+    height:5px;
+
 
     margin:40px auto 0;
 
-    left:auto;
 
-    right:auto;
+    background:#eee;
+
 
 }
 
+
+
 .serviceSwiper .swiper-scrollbar-drag{
+
 
     border-radius:999px;
 
-    background:linear-gradient(
+
+    background:
+
+    linear-gradient(
         90deg,
-        #005BFF,
-        #00C6FF
+        #c8a96b,
+        #f3dfaa
     );
 
-    box-shadow:
-        0 0 16px rgba(0,91,255,.3);
+
+}
+
+
+
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+
+@media(max-width:767px){
+
+
+.serviceCategorySection{
+
+    margin-bottom:55px;
+
+}
+
+
+
+.categoryTitle{
+
+    font-size:28px;
+
+}
+
+
+
+.serviceSlide{
+
+
+    width:250px;
+
+}
+
+
+
+.serviceSwiper{
+
+    padding-bottom:50px;
+
+}
+
+
+
+.serviceCard{
+
+
+    min-height:480px;
+
+
+    border-radius:22px;
+
+
+}
+
+
+
+.serviceImage{
+
+    border-radius:
+
+    22px 22px 0 0;
+
+}
+
+
+
+.serviceTitle{
+
+    padding:
+
+    18px 16px 10px;
+
+}
+
+
+
+.serviceTitle h2{
+
+    font-size:20px;
+
+}
+
+
+
+.serviceTitle p{
+
+    font-size:13px;
+
+}
+
+
+
+.newPrice{
+
+    font-size:24px;
+
+}
+
+
+
+.serviceFeatures{
+
+
+    padding:
+
+    0 16px 18px;
+
+
+    gap:10px;
+
+
+}
+
+
+
+.serviceFeatures div{
+
+
+    font-size:13px;
+
+
+}
+
+
+
+.serviceButton{
+
+
+    height:48px;
+
+
+    margin:
+
+    auto 16px 16px;
+
+
+    font-size:14px;
+
+
+}
+
+
+
+.serviceBadge{
+
+
+    font-size:10px;
+
+
+    padding:
+
+    7px 14px;
+
+
+}
+
 
 }

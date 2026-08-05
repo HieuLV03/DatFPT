@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import Image from "next/image";
+
 import ListService from "../../components/ServiceList/ServiceList";
 import "./page.css";
+
 import BackButton from "@/components/BackButton/BackButton";
 import ScrollReveal from "@/components/ScrollReveal/ScrollReveal";
 
@@ -10,187 +12,356 @@ import ScrollReveal from "@/components/ScrollReveal/ScrollReveal";
 export const revalidate = 600;
 
 
+
 export default async function HomePage() {
 
 
- const [serviceRes, postRes] = await Promise.all([
+  const [
+    serviceRes,
+    postRes
+  ] = await Promise.all([
 
-  supabase
-    .from("services")
-    .select("*")
-    .eq("status","available")
-    .order("created_at",{ascending:false}),
 
 
-  supabase
-    .from("posts")
-    .select("*")
-    .eq("status","published")
-    .order("created_at",{ascending:false})
-    .limit(5)
+    // ==========================
+    // SERVICES + CATEGORY
+    // ==========================
 
- ]);
+    supabase
+      .from("services")
+      .select(`
+        *,
+        service_categories!inner(
+          categories(
+            id,
+            name,
+            slug
+          )
+        )
+      `)
+      .order("created_at",{
+        ascending:false
+      }),
 
 
-const services = serviceRes.data || [];
-const posts = postRes.data || [];
 
 
-return (
 
-<main className="home">
+    // ==========================
+    // POSTS
+    // ==========================
 
+    supabase
+      .from("posts")
+      .select("*")
+      .eq("status","published")
+      .order("created_at",{
+        ascending:false
+      })
+      .limit(5)
 
 
-<ScrollReveal>
+  ]);
 
-<section className="section">
 
 
-<div className="sectionHeader">
 
-<BackButton />
 
-<h2>
-Sản phẩm
-</h2>
+  console.log(
+    "SERVICES:",
+    JSON.stringify(serviceRes.data,null,2)
+  );
 
-</div>
 
+  console.log(
+    "SERVICE ERROR:",
+    serviceRes.error
+  );
 
-<ListService services={services}/>
 
 
-</section>
 
 
-</ScrollReveal>
+  console.log(
+    "POSTS:",
+    JSON.stringify(postRes.data,null,2)
+  );
 
 
+  console.log(
+    "POST ERROR:",
+    postRes.error
+  );
 
 
 
-{/* BLOG */}
 
 
-<ScrollReveal delay={0.2}>
 
-<section className="section">
 
+  const services =
+    serviceRes.data || [];
 
-<div className="sectionHeader">
 
-<h2>
-Bài viết mới
-</h2>
 
-</div>
+  const posts =
+    postRes.data || [];
 
 
 
-<div className="blogGrid">
 
 
-{
-posts.map((p,index)=>(
 
 
-<ScrollReveal
-key={p.id}
-delay={index*0.1}
->
+  return (
 
+    <main className="home">
 
-<Link
 
-href={`/posts/${p.slug}`}
 
-className="blogCard"
 
->
 
+      {/* ==========================
+          SERVICES
+      ========================== */}
 
-<div className="blogImg">
 
+      <ScrollReveal>
 
-<Image
 
-src={p.image}
+        <section className="section">
 
-alt={p.title}
 
-width={600}
 
-height={400}
+          <div className="sectionHeader">
 
-sizes="(max-width:768px) 100vw,33vw"
 
-className="cardImage"
+            <BackButton />
 
-/>
 
+            <h2>
+              Sản phẩm
+            </h2>
 
-<div className="imgOverlay">
 
-<span className="imgBtn">
+          </div>
 
-Xem bài viết
 
-</span>
 
-</div>
 
 
-</div>
 
+          {
+            services.length ? (
 
+              <ListService
+                services={services}
+              >
 
-<div className="blogBody">
+              </ListService>
 
+            ) : (
 
-<h3>
-{p.title}
-</h3>
+              <p>
+                Chưa có dịch vụ
+              </p>
 
+            )
+          }
 
-<p>
-{p.description}
-</p>
 
 
-</div>
 
 
+        </section>
 
-</Link>
 
+      </ScrollReveal>
 
-</ScrollReveal>
 
 
-))
 
-}
 
 
 
-</div>
 
 
-</section>
+      {/* ==========================
+          BLOG
+      ========================== */}
 
-<div className="viewMoreWrap">
-  <Link href="/posts" className="viewMoreBtn">
-    Xem thêm bài viết
-    <span>→</span>
-  </Link>
-</div>
-</ScrollReveal>
 
 
+      <ScrollReveal delay={0.2}>
 
-</main>
 
-);
+        <section className="section">
+
+
+          <div className="sectionHeader">
+
+
+            <h2>
+              Bài viết mới
+            </h2>
+
+
+          </div>
+
+
+
+
+
+          <div className="blogGrid">
+
+
+          {
+            posts.map((p,index)=>(
+
+
+              <ScrollReveal
+
+                key={p.id}
+
+                delay={index * 0.1}
+
+              >
+
+
+                <Link
+
+                  href={`/posts/${p.slug}`}
+
+                  className="blogCard"
+
+                >
+
+
+
+                  {
+                    p.image && (
+
+                      <div className="blogImg">
+
+
+                        <Image
+
+                          src={p.image}
+
+                          alt={p.title}
+
+                          width={600}
+
+                          height={400}
+
+                          className="cardImage"
+
+                        />
+
+
+
+                        <div className="imgOverlay">
+
+
+                          <span className="imgBtn">
+
+                            Xem bài viết
+
+                          </span>
+
+
+                        </div>
+
+
+
+                      </div>
+
+                    )
+                  }
+
+
+
+
+
+
+                  <div className="blogBody">
+
+
+                    <h3>
+                      {p.title}
+                    </h3>
+
+
+
+                    <p>
+                      {p.description}
+                    </p>
+
+
+
+                  </div>
+
+
+
+
+                </Link>
+
+
+
+              </ScrollReveal>
+
+
+            ))
+          }
+
+
+
+          </div>
+
+
+
+
+
+        </section>
+
+
+
+
+
+        <div className="viewMoreWrap">
+
+
+          <Link
+
+            href="/posts"
+
+            className="viewMoreBtn"
+
+          >
+
+            Xem thêm bài viết
+
+            <span>
+              →
+            </span>
+
+
+          </Link>
+
+
+        </div>
+
+
+
+      </ScrollReveal>
+
+
+
+
+
+    </main>
+
+  );
+
 
 }

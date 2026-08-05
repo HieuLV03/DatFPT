@@ -109,8 +109,7 @@ export default function RootLayout({
 
     >
 
-      <body className="appBody">
-
+<body className={`${inter.className} appBody`}>
         <ClientLayout>
 
           {children}

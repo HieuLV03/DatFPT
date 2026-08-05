@@ -4,246 +4,418 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Scrollbar } from "swiper/modules";
+import { Scrollbar } from "swiper/modules";
 
 import "swiper/css";
-import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 
 import "./ServiceList.css";
 
 
-export default function ServiceList({
-  services = [],
-}) {
 
-  if (!services.length) return null;
+function ServiceSwiper({
+  services=[]
+}){
 
 
-  return (
+return (
 
-    <div className="serviceSwiperWrapper">
 <div className="serviceSwiperWrapper">
 
-      <Swiper
 
-        modules={[
-          Navigation,
-          Scrollbar,
-        ]}
+<Swiper
 
-        className="serviceSwiper"
 
+modules={[
+ Scrollbar
+]}
 
-        /* QUAN TRỌNG */
-        slidesPerView="auto"
 
-        spaceBetween={20}
+className="serviceSwiper"
 
 
-        centeredSlides={true}
+slidesPerView="auto"
 
-        centeredSlidesBounds={true}
 
+spaceBetween={20}
 
-        grabCursor={true}
 
-        watchOverflow={true}
+centeredSlides={true}
 
 
-        speed={600}
+centeredSlidesBounds={true}
 
 
-        scrollbar={{
-          draggable:true,
-          hide:false,
-        }}
+grabCursor={true}
 
-      >
 
-        {services.map((item,index)=>(
+watchOverflow={true}
 
-          <SwiperSlide
 
-            key={item.id}
+speed={600}
 
-            className="serviceSlide"
 
-          >
+scrollbar={{
+ draggable:true,
+ hide:false
+}}
 
 
-            <motion.div
+>
 
-              className="serviceCard"
 
+{
+services.map((item,index)=>(
 
-              initial={{
-                opacity:0,
-                y:40,
-              }}
 
+<SwiperSlide
 
-              whileInView={{
-                opacity:1,
-                y:0,
-              }}
+key={item.id}
 
+className="serviceSlide"
 
-              viewport={{
-                once:true,
-              }}
+>
 
 
-              transition={{
-                duration:.45,
-                delay:index*.08,
-              }}
+<motion.div
 
-            >
 
+className="serviceCard"
 
-              {item.badge && (
 
-                <div className="serviceBadge">
-                  {item.badge}
-                </div>
+initial={{
+ opacity:0,
+ y:40
+}}
 
-              )}
 
+whileInView={{
+ opacity:1,
+ y:0
+}}
 
 
-              <div className="serviceImage">
+viewport={{
+ once:true
+}}
 
-                {item.image && (
 
-                  <img
+transition={{
+ duration:.45,
+ delay:index*.08
+}}
 
-                    src={item.image}
 
-                    alt={item.name || "Dịch vụ"}
 
-                    className="serviceImg"
+>
 
-                  />
 
-                )}
 
-              </div>
+{
+item.badge && (
 
+<div className="serviceBadge">
+{item.badge}
+</div>
 
+)
+}
 
 
-              <div className="serviceTitle">
 
 
-                <h2>
-                  {item.name}
-                </h2>
+<div className="serviceImage">
 
 
-                <p>
-                  {item.description}
-                </p>
+{
+item.image && (
 
+<img
 
+src={item.image}
 
-                {item.speed && (
+alt={item.name || "Dịch vụ"}
 
-                  <div className="serviceSpeed">
+className="serviceImg"
 
-                    🚀 {item.speed}
+/>
 
-                  </div>
+)
 
-                )}
+}
 
-
-
-                <div className="servicePrice">
-
-
-                  {item.old_price && (
-
-                    <span className="oldPrice">
-
-                      {Number(item.old_price)
-                        .toLocaleString("vi-VN")}đ
-
-                    </span>
-
-                  )}
-
-
-
-                  <span className="newPrice">
-
-                    {Number(item.price)
-                    .toLocaleString("vi-VN")}đ/tháng
-
-                  </span>
-
-
-                </div>
-
-
-              </div>
-
-
-
-
-
-              <div className="serviceFeatures">
-
-
-                {Array.isArray(item.features) &&
-
-                  item.features.map((feature,i)=>(
-
-                    <div key={i}>
-
-                      ✓ {feature}
-
-                    </div>
-
-                  ))
-
-                }
-
-
-              </div>
-
-
-
-
-
-              <Link
-
-                href={`/services/${item.slug || item.id}`}
-
-                className="serviceButton"
-
-              >
-
-                {item.button_text || "Xem chi tiết"}
-
-              </Link>
-
-
-
-            </motion.div>
-
-
-          </SwiperSlide>
-
-
-        ))}
-
-
-      </Swiper>
 
 </div>
-    </div>
 
-  );
+
+
+
+
+<div className="serviceTitle">
+
+
+<h2>
+{item.name}
+</h2>
+
+
+<p>
+{item.description}
+</p>
+
+
+
+{
+item.speed && (
+
+<div className="serviceSpeed">
+
+🚀 {item.speed}
+
+</div>
+
+)
+
+}
+
+
+
+<div className="servicePrice">
+
+
+{
+item.old_price && (
+
+<span className="oldPrice">
+
+{Number(item.old_price)
+.toLocaleString("vi-VN")}đ
+
+</span>
+
+)
+
+}
+
+
+
+<span className="newPrice">
+
+{Number(item.price)
+.toLocaleString("vi-VN")}đ/tháng
+
+</span>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div className="serviceFeatures">
+
+
+{
+Array.isArray(item.features) &&
+
+item.features.map((feature,i)=>(
+
+
+<div key={i}>
+
+
+<span className="featureIcon">
+✓
+</span>
+
+
+<span>
+
+{
+String(feature)
+.replace(/^\d+\.\s*/,"")
+}
+
+</span>
+
+
+</div>
+
+
+))
+
+
+}
+
+
+
+</div>
+
+
+
+
+
+
+
+<Link
+
+href={`/services/${item.slug || item.id}`}
+
+className="serviceButton"
+
+>
+
+{item.button_text || "Xem chi tiết"}
+
+
+</Link>
+
+
+
+</motion.div>
+
+
+
+</SwiperSlide>
+
+
+
+))
+
+}
+
+
+
+</Swiper>
+
+
+
+</div>
+
+
+)
+
+}
+
+
+
+
+
+
+
+export default function ServiceList({
+
+services=[]
+
+}){
+
+
+if(!services.length)
+return null;
+
+
+
+// GROUP CATEGORY
+
+const grouped = services.reduce((acc,item)=>{
+
+
+const category =
+item.service_categories?.[0]?.categories;
+
+
+
+const categoryName =
+category?.name || "Khác";
+
+
+
+if(!acc[categoryName]){
+
+acc[categoryName]=[];
+
+}
+
+
+
+acc[categoryName].push(item);
+
+
+
+return acc;
+
+
+},{});
+
+
+
+
+
+return (
+
+<div className="serviceByCategory">
+
+
+{
+
+Object.entries(grouped).map(
+([category,items])=>(
+
+
+<section
+
+key={category}
+
+className="serviceCategorySection"
+
+>
+
+
+
+<div className="categoryHeader">
+
+<h2 className="categoryTitle">
+
+{category}
+
+</h2>
+
+
+</div>
+
+
+
+
+
+<ServiceSwiper
+
+services={items}
+
+/>
+
+
+
+</section>
+
+
+))
+
+
+}
+
+
+
+</div>
+
+
+)
 
 }
