@@ -38,7 +38,7 @@
   top: 24px; /* đúng bằng height adminBar */
 }
 .header {
-    position:fixed;
+    position:sticky;
 
   top: 0; /* mặc định user */
   left: 0;

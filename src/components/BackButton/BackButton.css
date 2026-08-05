@@ -1,44 +1,130 @@
-.backBtn {
-  position: fixed;
-  top: 66px;
-  left: 20px;
-  z-index: 1000;
+.backBtn{
 
-  border: none;
-  outline: none;
+  position:fixed;
 
-  background: rgba(255, 255, 255, 0.9);
+  top:69px;
+  left:20px;
 
-  backdrop-filter: blur(10px);
+  z-index:1000;
 
-  padding: 10px 16px;
 
-  border-radius: 999px;
+  display:flex;
 
-  font-size: 14px;
-  font-weight: 600;
+  align-items:center;
 
-  color: #111;
+  gap:8px;
 
-  cursor: pointer;
 
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border:none;
 
-  transition: 0.2s;
+  outline:none;
+
+
+  background:
+  rgba(255,255,255,.88);
+
+
+  backdrop-filter:
+  blur(14px);
+
+
+  padding:
+  10px 18px;
+
+
+  border-radius:999px;
+
+
+  font-size:14px;
+
+  font-weight:600;
+
+
+  color:#222;
+
+
+  cursor:pointer;
+
+
+  box-shadow:
+  0 10px 35px rgba(0,0,0,.1);
+
+
+  transition:
+  transform .35s cubic-bezier(.4,0,.2,1),
+  opacity .3s,
+  background .3s;
+
+
 }
 
-.backBtn:hover {
-  transform: translateX(-3px);
-  background: #fff;
+
+
+/* hiện */
+
+.backBtn.show{
+
+  transform:
+  translateX(0);
+
+  opacity:1;
+
 }
 
-@media (max-width: 768px) {
-  .backBtn {
-    top: 66px;
-    left: 12px;
 
-    padding: 9px 14px;
+/* ẩn sang trái */
 
-    font-size: 13px;
-  }
+.backBtn.hide{
+
+
+  transform:
+  translateX(-140%);
+
+
+  opacity:0;
+
+
+}
+
+
+
+.backBtn:hover{
+
+  transform:
+  translateX(-4px);
+
+
+  background:#fff;
+
+}
+
+
+
+.backBtn span{
+
+  font-size:18px;
+
+}
+
+
+
+
+@media(max-width:768px){
+
+
+.backBtn{
+
+  top:69px;
+
+  left:12px;
+
+  padding:
+  9px 15px;
+
+
+  font-size:13px;
+
+}
+
+
 }
