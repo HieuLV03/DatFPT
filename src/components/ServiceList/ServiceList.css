@@ -692,15 +692,17 @@
 
 .serviceSwiper .swiper-scrollbar{
 
+    position:relative;
+
     width:240px;
 
     height:6px;
 
-    margin:38px auto 0;
+    margin:40px auto 0;
 
-    border-radius:999px;
+    left:auto;
 
-    background:#e5edf8;
+    right:auto;
 
 }
 
