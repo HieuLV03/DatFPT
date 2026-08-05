@@ -1,14 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import {useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import BackButton from "../../components/BackButton/BackButton";
 import "./page.css";
 
 export default function CreateServicePage() {
-
+const [categories, setCategories] = useState([]);
   const [loading,setLoading]=useState(false);
-
+const [showCategory, setShowCategory] = useState(false);
   const [file,setFile]=useState(null);
 
   const [featureInput,setFeatureInput]=useState("");
@@ -18,7 +18,7 @@ export default function CreateServicePage() {
     name:"",
     slug:"",
     image:"",
-    service_type:"internet",
+  category_ids: [],
     speed:"",
     price:"",
     old_price:"",
@@ -27,10 +27,32 @@ export default function CreateServicePage() {
     features:[],
     button_text:"Đăng ký ngay",
     status:true,
-    sort_order:0,
 
   });
+//==========================
+// LOAD CATEGORIES
+//==========================
 
+const fetchCategories = async () => {
+
+  const { data, error } = await supabase
+    .from("categories")
+    .select("id, name")
+    .eq("status", true)
+    .order("name");
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  setCategories(data || []);
+
+};
+
+useEffect(() => {
+  fetchCategories();
+}, []);
   //==========================
   // SLUG
   //==========================
@@ -73,40 +95,26 @@ export default function CreateServicePage() {
   // UPLOAD IMAGE
   //==========================
 
-  const uploadImage=async(file,slug)=>{
+const uploadImage = async (file, slug) => {
 
-    const ext=file.name.split(".").pop();
+  const ext = file.name.split(".").pop();
 
-    const fileName=`${slug}-${Date.now()}-${randomString()}.${ext}`;
+  const fileName = `${slug}-${Date.now()}-${randomString()}.${ext}`;
 
-    const {error}=await supabase.storage
+  const { error } = await supabase.storage
+    .from("images_service")
+    .upload(fileName, file);
 
-      .from("images_service")
+  if (error) {
+    throw error;
+  }
 
-      .upload(fileName,file);
+  const { data } = supabase.storage
+    .from("images_service")
+    .getPublicUrl(fileName);
 
-    if(error){
-
-      throw error;
-
-    }
-
-    const {data}=supabase.storage
-
-      .from("images_service")
-
-      .getPublicUrl(fileName);
-
-    return{
-
-      image:data.publicUrl,
-
-      image_path:fileName,
-
-    };
-
-  };
-
+  return data.publicUrl;
+};
 
   //==========================
   // FEATURE
@@ -167,66 +175,78 @@ export default function CreateServicePage() {
     setLoading(true);
 
     try{
+let image = null;
 
-      let image=null;
+if (file) {
+  image = await uploadImage(file, form.slug);
+}
 
-      let image_path=null;
+const { data: service, error } = await supabase
 
-      if(file){
+.from("services")
 
-        const upload=await uploadImage(
+.insert([{
 
-          file,
+    name: form.name,
 
-          form.slug
+    slug: form.slug,
 
-        );
+    image,
 
-        image=upload.image;
+    speed: form.speed,
 
-        image_path=upload.image_path;
+    price: form.price
+        ? Number(form.price)
+        : null,
 
-      }
+    old_price: form.old_price
+        ? Number(form.old_price)
+        : null,
 
-      const {error}=await supabase
+    badge: form.badge,
 
-        .from("services")
+    description: form.description,
 
-        .insert([{
+    features: form.features,
 
-          name:form.name,
+    button_text: form.button_text,
 
-          slug:form.slug,
+    status: form.status,
 
-          image,
+}])
 
-          image_path,
+.select()
 
-          service_type:form.service_type,
+.single(); 
+if (error) {
 
-          speed:form.speed,
+    throw error;
 
-          price:form.price
-            ?Number(form.price)
-            :null,
+}
 
-          old_price:form.old_price
-            ?Number(form.old_price)
-            :null,
+if (form.category_ids.length > 0) {
 
-          badge:form.badge,
+    const rows = form.category_ids.map(categoryId => ({
 
-          description:form.description,
+        service_id: service.id,
 
-          features:form.features,
+        category_id: categoryId,
 
-          button_text:form.button_text,
+    }));
 
-          status:form.status,
+    const { error: categoryError } = await supabase
 
-          sort_order:Number(form.sort_order),
+        .from("service_categories")
 
-        }]);
+        .insert(rows);
+
+    if (categoryError) {
+
+        throw categoryError;
+
+    }
+
+}
 
       if(error){
 
@@ -241,8 +261,8 @@ export default function CreateServicePage() {
         name:"",
         slug:"",
         image:"",
-        service_type:"internet",
-        speed:"",
+    category_ids: [],
+            speed:"",
         price:"",
         old_price:"",
         badge:"",
@@ -250,8 +270,6 @@ export default function CreateServicePage() {
         features:[],
         button_text:"Đăng ký ngay",
         status:true,
-        sort_order:0,
-
       });
 
       setFile(null);
@@ -285,20 +303,55 @@ return (
 
     {/* IMAGE */}
 
-    <div className="formGroup">
+<div className="formGroup">
 
-      <label>Ảnh dịch vụ</label>
+    <label>Danh mục</label>
 
-      <input
-        type="file"
-        accept="image/*"
-        onChange={(e)=>
-          setFile(e.target.files?.[0])
-        }
-      />
+<button
+    type="button"
+    className="chooseCategoryBtn"
+    onClick={() => setShowCategory(true)}
+>
 
-    </div>
+{
+    form.category_ids.length === 0
 
+    ? "Chọn danh mục"
+
+    : categories
+
+        .filter(category =>
+
+            form.category_ids.includes(category.id)
+
+        )
+
+        .map(category => category.name)
+
+        .join(", ")
+
+}
+
+</button>
+<label>Ảnh dịch vụ</label>
+
+<input
+  type="file"
+  accept="image/*"
+  onChange={(e)=>{
+    setFile(e.target.files[0]);
+  }}
+/>
+
+{
+file && (
+<p>
+Đã chọn: {file.name}
+</p>
+)
+}
+
+</div>
     {/* NAME */}
 
     <div className="formGroup">
@@ -357,92 +410,30 @@ return (
 
     </div>
 
-    {/* TYPE */}
-
-    <div className="grid2">
-
-      <div className="formGroup">
-
-        <label>Loại dịch vụ</label>
-
-        <select
-
-          value={form.service_type}
-
-          onChange={(e)=>
-
-            setForm({
-
-              ...form,
-
-              service_type:e.target.value,
-
-            })
-
-          }
-
-        >
-
-          <option value="internet">
-
-            Internet
-
-          </option>
-
-          <option value="internet_tv">
-
-            Internet + Truyền hình
-
-          </option>
-
-          <option value="camera">
-
-            Camera
-
-          </option>
-
-          <option value="combo">
-
-            Combo
-
-          </option>
-
-        </select>
-
-      </div>
-
-      <div className="formGroup">
-
-        <label>Tốc độ</label>
-
-        <input
-
-          placeholder="300 Mbps"
-
-          value={form.speed}
-
-          onChange={(e)=>
-
-            setForm({
-
-              ...form,
-
-              speed:e.target.value,
-
-            })
-
-          }
-
-        />
-
-      </div>
-
-    </div>
-
     {/* PRICE */}
 
     <div className="grid2">
+<label>Tốc độ</label>
 
+<input
+
+placeholder="Ví dụ: 1Gbps"
+
+value={form.speed}
+
+onChange={(e)=>
+
+setForm({
+
+...form,
+
+speed:e.target.value
+
+})
+
+}
+
+/>
       <div className="formGroup">
 
         <label>Giá</label>
@@ -681,31 +672,6 @@ return (
 
       </div>
 
-      <div className="formGroup">
-
-        <label>Thứ tự</label>
-
-        <input
-
-          type="number"
-
-          value={form.sort_order}
-
-          onChange={(e)=>
-
-            setForm({
-
-              ...form,
-
-              sort_order:e.target.value,
-
-            })
-
-          }
-
-        />
-
-      </div>
 
     </div>
 
@@ -756,7 +722,66 @@ return (
     </button>
 
   </div>
+{
+showCategory && (
 
+<div
+    className="popupOverlay"
+    onClick={() => setShowCategory(false)}
+>
+
+<div
+    className="popupBox"
+    onClick={(e) => e.stopPropagation()}
+>
+
+    <h2>Chọn danh mục</h2>
+
+  <div className="categoryList">
+  {categories.map((category) => (
+    <label
+      key={category.id}
+      className="categoryItem"
+    >
+      <input
+        type="checkbox"
+        checked={form.category_ids.includes(category.id)}
+        onChange={(e) => {
+          if (e.target.checked) {
+            setForm((prev) => ({
+              ...prev,
+              category_ids: [
+                ...prev.category_ids,
+                category.id,
+              ],
+            }));
+          } else {
+            setForm((prev) => ({
+              ...prev,
+              category_ids: prev.category_ids.filter(
+                (id) => id !== category.id
+              ),
+            }));
+          }
+        }}
+      />
+
+      <span>{category.name}</span>
+    </label>
+  ))}
+</div>
+    <button
+        className="closePopup"
+        onClick={() => setShowCategory(false)}
+    >
+        Đóng
+    </button>
+
+</div>
+</div>
+
+)
+}
 </div>
 
 );

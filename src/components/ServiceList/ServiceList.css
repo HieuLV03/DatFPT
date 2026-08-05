@@ -410,7 +410,23 @@
 
 
 }
+.servicePrice{
+    margin:16px 0;
+    font-size:28px;
+    font-weight:700;
+    color:#ff6b00;
+}
 
+.oldPrice{
+    margin-right:10px;
+    color:#999;
+    text-decoration:line-through;
+    font-size:16px;
+}
+
+.newPrice{
+    color:#ff6b00;
+}
 
 
 /* ===========================

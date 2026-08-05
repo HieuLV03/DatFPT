@@ -6,6 +6,7 @@ import BackButton from "@/components/BackButton/BackButton";
 import "./page.css";
 
 export default function CreateCategoryPage() {
+
   const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
@@ -13,10 +14,13 @@ export default function CreateCategoryPage() {
     slug: "",
   });
 
-  // ======================
-  // Tạo slug
-  // ======================
+  const [imageFile, setImageFile] = useState(null);
 
+  const [preview, setPreview] = useState("");
+
+  // ======================
+  // TẠO SLUG
+  // ======================
   const sanitize = (text) => {
     return text
       .toLowerCase()
@@ -30,88 +34,125 @@ export default function CreateCategoryPage() {
   };
 
   // ======================
-  // CREATE
+  // CHỌN ẢNH
   // ======================
-  
-const [imageFile, setImageFile] = useState(null);
-const createCategory = async () => {
-  if (!form.name.trim()) {
-    return alert("Vui lòng nhập tên danh mục");
-  }
+  const handleImageChange = (e) => {
 
-  try {
-    setLoading(true);
+    const file = e.target.files?.[0];
 
-    let imageUrl = "";
+    if (!file) return;
 
-    // Upload ảnh nếu có
-    if (imageFile) {
-      const fileName = `${Date.now()}-${imageFile.name}`;
+    setImageFile(file);
 
-      const { error: uploadError } = await supabase.storage
-        .from("categories") // tên bucket
-        .upload(fileName, imageFile);
+    setPreview(
+      URL.createObjectURL(file)
+    );
 
-      if (uploadError) {
-        alert(uploadError.message);
+  };
+
+  // ======================
+  // CREATE CATEGORY
+  // ======================
+  const createCategory = async () => {
+
+    if (!form.name.trim()) {
+      return alert("Vui lòng nhập tên danh mục");
+    }
+
+    try {
+
+      setLoading(true);
+
+      let imageUrl = "";
+
+      // Upload ảnh
+      if (imageFile) {
+
+        const fileName =
+          `${Date.now()}-${imageFile.name}`;
+
+        const { error: uploadError } =
+          await supabase.storage
+            .from("images_category")
+            .upload(fileName, imageFile);
+
+        if (uploadError) {
+          alert(uploadError.message);
+          return;
+        }
+
+        const { data } =
+          supabase.storage
+            .from("images_category")
+            .getPublicUrl(fileName);
+
+        imageUrl = data.publicUrl;
+
+      }
+
+      const { error } =
+        await supabase
+          .from("categories")
+          .insert([
+            {
+              name: form.name,
+              slug: form.slug,
+              image: imageUrl,
+              status: true,
+            },
+          ]);
+
+      if (error) {
+        alert(error.message);
         return;
       }
 
-      const { data } = supabase.storage
-        .from("categories")
-        .getPublicUrl(fileName);
+      alert("Thêm danh mục thành công!");
 
-      imageUrl = data.publicUrl;
+      setForm({
+        name: "",
+        slug: "",
+      });
+
+      setImageFile(null);
+
+      setPreview("");
+
+    } catch (err) {
+
+      console.log(err);
+
+      alert("Có lỗi xảy ra.");
+
+    } finally {
+
+      setLoading(false);
+
     }
 
-    const { error } = await supabase
-      .from("categories")
-      .insert([
-        {
-          name: form.name,
-          slug: form.slug,
-          img: imageUrl,
-        },
-      ]);
-
-    if (error) {
-      alert(error.message);
-      return;
-    }
-
-    alert("Thêm danh mục thành công!");
-
-    setForm({
-      name: "",
-      slug: "",
-    });
-
-    setImageFile(null);
-
-  } catch (err) {
-    console.log(err);
-    alert("Có lỗi xảy ra");
-  } finally {
-    setLoading(false);
-  }
-};
-  return (
+  };
+    return (
     <div className="createCategoryPage">
       <div className="createCategoryCard">
 
         <div className="headerRow">
+
           <BackButton />
 
           <div>
             <h1>Thêm danh mục</h1>
             <p>Tạo danh mục mới</p>
           </div>
+
         </div>
 
+        {/* Tên danh mục */}
         <input
+          type="text"
           placeholder="Tên danh mục"
           value={form.name}
           onChange={(e) => {
+
             const name = e.target.value;
 
             setForm({
@@ -119,10 +160,13 @@ const createCategory = async () => {
               name,
               slug: sanitize(name),
             });
+
           }}
         />
 
+        {/* Slug */}
         <input
+          type="text"
           placeholder="Slug"
           value={form.slug}
           onChange={(e) =>
@@ -132,13 +176,23 @@ const createCategory = async () => {
             })
           }
         />
+
+        {/* Upload ảnh */}
         <input
-  type="file"
-  accept="image/*"
-  onChange={(e) =>
-    setImageFile(e.target.files?.[0] || null)
-  }
-/>
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+        />
+
+        {/* Preview */}
+        {preview && (
+          <img
+            src={preview}
+            alt="Preview"
+            className="previewImage"
+          />
+        )}
+
         <button
           onClick={createCategory}
           disabled={loading}
@@ -147,7 +201,9 @@ const createCategory = async () => {
             ? "Đang tạo..."
             : "Tạo danh mục"}
         </button>
+
       </div>
     </div>
   );
+
 }

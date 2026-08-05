@@ -23,8 +23,6 @@ export default function ServicesPage() {
         name,
         slug,
         image,
-        image_path,
-        service_type,
         speed,
         price,
         old_price,
@@ -33,12 +31,8 @@ export default function ServicesPage() {
         features,
         button_text,
         status,
-        sort_order,
         created_at
       `)
-      .order("sort_order", {
-        ascending: true,
-      });
 
     if (error) {
       console.log(error);
@@ -68,15 +62,16 @@ export default function ServicesPage() {
 
     try {
       // Xóa ảnh Storage
-      if (service.image_path) {
-        const { error: storageError } =
-          await supabase.storage
-            .from("images_service")
-            .remove([service.image_path]);
+    if (service.image) {
+  const path = service.image.split("/images_service/")[1];
 
-        if (storageError) {
-          console.log(storageError.message);
-        }
+  const { error } = await supabase.storage
+    .from("images_service")
+    .remove([path]);
+
+  console.log(path);
+  console.log(error);
+
       }
 
       // Xóa database
@@ -150,10 +145,6 @@ export default function ServicesPage() {
                   {service.slug}
                 </p>
 
-                <p>
-                  <strong>Loại:</strong>{" "}
-                  {service.service_type || "-"}
-                </p>
 
                 <p>
                   <strong>Tốc độ:</strong>{" "}
@@ -183,11 +174,6 @@ export default function ServicesPage() {
                   {service.status
                     ? "Hiển thị"
                     : "Ẩn"}
-                </p>
-
-                <p>
-                  <strong>Thứ tự:</strong>{" "}
-                  {service.sort_order}
                 </p>
 
                 <p>

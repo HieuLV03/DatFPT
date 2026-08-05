@@ -179,14 +179,23 @@ className="serviceImg"
 <p>
 
 {
-item.description ||
+item.description
 
-"Dịch vụ FPT chất lượng cao"
 
 }
 
 </p>
+<div className="servicePrice">
+  {item.old_price && (
+    <span className="oldPrice">
+      {Number(item.old_price).toLocaleString("vi-VN")}đ
+    </span>
+  )}
 
+  <span className="newPrice">
+    {Number(item.price).toLocaleString("vi-VN")}đ/tháng
+  </span>
+</div>
 
 </div>
 

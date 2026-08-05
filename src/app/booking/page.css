@@ -1,6 +1,8 @@
 :root{
+
   --primary:#f58220;
   --primary-hover:#e66d0d;
+
   --primary-light:#fff6ee;
 
   --text:#333;
@@ -9,364 +11,602 @@
   --border:#e8e8e8;
 
   --radius:18px;
+
 }
 
+
 /* ========================= */
+/* CONTAINER */
+/* ========================= */
+
 
 .booking-container{
 
     min-height:100vh;
 
-    padding:40px 20px;
+    padding:40px 20px 120px;
 
     display:flex;
+
     justify-content:center;
+
     align-items:center;
 
     background:
     linear-gradient(
         180deg,
-        #fff,
+        #ffffff,
         #f6f8fc
     );
 
 }
 
+
+
+/* ========================= */
+/* BOX */
+/* ========================= */
+
+
 .booking-box{
 
     width:100%;
+
     max-width:720px;
+
 
     background:#fff;
 
+
     border-radius:24px;
+
 
     padding:36px;
 
+
     box-shadow:
+
     0 20px 50px rgba(0,0,0,.08);
+
 
     border:1px solid #eee;
 
 }
 
+
+
+
 .booking-box h1{
 
+
     text-align:center;
+
 
     font-size:32px;
 
+
     font-weight:800;
+
 
     color:var(--primary);
 
-    margin-bottom:8px;
+
+    margin-bottom:12px;
+
 
 }
+
 
 .booking-box p{
 
-    text-align:center;
 
     color:var(--text-light);
 
-    margin-bottom:30px;
-
 }
 
+
+
+
 /* ========================= */
+/* FORM */
+/* ========================= */
+
 
 .booking-form{
 
+
     display:flex;
+
 
     flex-direction:column;
 
+
     gap:18px;
 
+
 }
+
+
 
 .booking-form input{
 
+
     height:54px;
+
 
     padding:0 18px;
 
+
     border-radius:14px;
+
 
     border:1px solid var(--border);
 
+
     font-size:16px;
 
-    transition:.25s;
 
     outline:none;
 
-}
-
-.booking-form input:focus{
-
-    border-color:var(--primary);
-
-    box-shadow:
-    0 0 0 4px rgba(245,130,32,.12);
-
-}
-
-/* ========================= */
-
-.checkboxGroup{
-
-    background:var(--primary-light);
-
-    padding:22px;
-
-    border-radius:18px;
-
-}
-
-.checkboxTitle{
-
-    font-size:18px;
-
-    font-weight:700;
-
-    margin-bottom:18px;
-
-    color:#222;
-
-}
-
-.checkboxGroup label{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    padding:12px 10px;
-
-    border-radius:12px;
-
-    cursor:pointer;
-
-    transition:.2s;
-
-}
-
-.checkboxGroup label:hover{
-
-    background:white;
-
-}
-
-.checkboxGroup input{
-
-    width:20px;
-
-    height:20px;
-
-    accent-color:var(--primary);
-
-}
-
-/* ========================= */
-
-.booking-form button{
-
-    height:56px;
-
-    border:none;
-
-    border-radius:14px;
-
-    background:
-    linear-gradient(
-        90deg,
-        #f58220,
-        #ff9d45
-    );
-
-    color:white;
-
-    font-size:17px;
-
-    font-weight:700;
-
-    cursor:pointer;
 
     transition:.25s;
 
+
 }
 
-.booking-form button:hover{
 
-    transform:translateY(-2px);
+
+.booking-form input:focus{
+
+
+    border-color:var(--primary);
+
 
     box-shadow:
-    0 15px 30px rgba(245,130,32,.25);
+
+    0 0 0 4px rgba(245,130,32,.12);
+
 
 }
 
-.booking-form button:disabled{
 
-    opacity:.6;
 
-    cursor:not-allowed;
+
+
+/* ========================= */
+/* SERVICE CHECKBOX */
+/* ========================= */
+
+
+.checkboxGroup{
+
+
+    background:var(--primary-light);
+
+
+    padding:22px;
+
+
+    border-radius:18px;
+
+
+    border:1px solid #ffe1c2;
+
 
 }
-.submitBar{
 
-    position:fixed;
 
-    left:0;
-    right:0;
-    bottom:0;
+
+.checkboxTitle{
+
+
+    font-size:18px;
+
+
+    font-weight:700;
+
+
+    color:#222;
+
+
+    margin-bottom:18px;
+
+
+}
+
+
+
+
+.checkboxGroup label{
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    gap:12px;
+
+
+    padding:14px 12px;
+
+
+    margin-bottom:10px;
+
 
     background:#fff;
 
+
+    border-radius:12px;
+
+
+    cursor:pointer;
+
+
+    border:1px solid transparent;
+
+
+    transition:.25s;
+
+
+    line-height:1.5;
+
+
+}
+
+
+
+.checkboxGroup label:hover{
+
+
+    border-color:var(--primary);
+
+
+    transform:translateX(3px);
+
+
+}
+
+
+
+.checkboxGroup label.activeService{
+
+
+    background:#fff0df;
+
+
+    border-color:var(--primary);
+
+
+}
+
+
+
+
+
+.checkboxGroup input{
+
+
+    width:20px;
+
+
+    height:20px;
+
+
+    flex-shrink:0;
+
+
+    accent-color:var(--primary);
+
+
+}
+
+
+
+
+/* ========================= */
+/* BUTTON FIXED */
+/* ========================= */
+
+
+.submitBar{
+
+
+    position:fixed;
+
+
+    left:0;
+
+    right:0;
+
+
+    bottom:0;
+
+
+    background:#fff;
+
+
     padding:12px 18px;
 
+
     box-shadow:
-        0 -8px 30px rgba(0,0,0,.08);
+
+
+    0 -8px 30px rgba(0,0,0,.08);
+
 
     z-index:9999;
+
+
 }
+
+
+
 
 .submitBar button{
 
+
     width:100%;
-    max-width:300px;
+
+
+    max-width:360px;
+
 
     height:56px;
 
+
     display:block;
+
 
     margin:auto;
 
+
     border:none;
+
 
     border-radius:14px;
 
-    background:linear-gradient(
+
+    background:
+
+    linear-gradient(
         90deg,
         #f58220,
         #ff9b42
     );
 
+
     color:white;
+
 
     font-size:17px;
 
+
     font-weight:700;
+
+
+    cursor:pointer;
+
+
+    transition:.25s;
+
+
 }
+
+
+
+
+.submitBar button:hover{
+
+
+    transform:translateY(-2px);
+
+
+    box-shadow:
+
+    0 15px 30px rgba(245,130,32,.25);
+
+
+}
+
+
+
+
+.submitBar button:disabled{
+
+
+    opacity:.6;
+
+
+    cursor:not-allowed;
+
+
+}
+
+
+
+
+
 /* ========================= */
 /* POPUP */
 /* ========================= */
 
+
 .successOverlay{
+
 
     position:fixed;
 
+
     inset:0;
 
-    background:rgba(0,0,0,.45);
+
+    background:
+
+    rgba(0,0,0,.45);
+
 
     display:flex;
 
+
     justify-content:center;
+
 
     align-items:center;
 
+
     z-index:999999;
+
 
     backdrop-filter:blur(4px);
 
+
 }
+
+
+
+
 
 .successPopup{
 
+
     width:90%;
+
 
     max-width:380px;
 
+
     background:white;
+
 
     border-radius:22px;
 
+
     padding:30px;
+
 
     text-align:center;
 
-    animation:popup .35s;
+
+    animation:popup .35s ease;
+
 
 }
+
+
+
+
 
 .successIcon{
 
+
     font-size:60px;
+
 
     margin-bottom:16px;
 
+
 }
+
+
+
 
 .successPopup h2{
 
+
     color:var(--primary);
+
 
     font-size:28px;
 
+
     margin-bottom:10px;
 
+
 }
+
+
 
 .successPopup p{
 
+
     color:#666;
+
 
     line-height:1.7;
 
+
     margin-bottom:22px;
 
+
 }
+
+
+
+
 
 .successPopup button{
 
+
     width:100%;
+
 
     height:50px;
 
+
     border:none;
+
 
     border-radius:12px;
 
+
     background:
+
     linear-gradient(
         90deg,
         #f58220,
-        #ff9d45
+        #ff9b42
     );
+
 
     color:white;
 
+
     font-size:16px;
+
 
     font-weight:700;
 
+
     cursor:pointer;
 
+
 }
+
+
+
+
 
 .errorPopup h2{
 
+
     color:#e74c3c;
+
 
 }
 
+
+
+
+
+/* ========================= */
+/* ANIMATION */
 /* ========================= */
 
+
 @keyframes popup{
+
 
     from{
 
@@ -376,6 +616,7 @@
 
     }
 
+
     to{
 
         opacity:1;
@@ -384,136 +625,196 @@
 
     }
 
+
 }
+
+
+
+
 
 /* ========================= */
 /* MOBILE */
 /* ========================= */
 
+
 @media(max-width:768px){
+
 
 .booking-container{
 
-    padding:18px;
+
+    padding:20px 16px 120px;
+
 
     align-items:flex-start;
 
+
 }
+
+
+
 
 .booking-box{
 
-    margin-top:60px;
-
-    padding:24px;
-
-}
-
-.booking-box h1{
-
-    font-size:24px;
-
-}
-
-.booking-box p{
-
-    font-size:15px;
-
-}
-
-.checkboxTitle{
-
-    font-size:17px;
-
-}
-
-.checkboxGroup{
-
-    padding:18px;
-
-}
-
-.checkboxGroup label{
-
-    font-size:15px;
-
-}
-
-.booking-form input{
-
-    height:52px;
-
-    font-size:16px;
-
-}
-
-.booking-form button{
-
-    height:54px;
-
-    font-size:16px;
-
-}
-
-.successPopup{
-
-    padding:24px;
-
-}
-
-.successPopup h2{
-
-    font-size:22px;
-
-}
-
-.successPopup p{
-
-    font-size:14px;
-
-}
-
-}
-
-@media(max-width:480px){
-
-.booking-box{
 
     margin-top:40px;
 
-    padding:18px;
+
+    padding:24px;
+
+
+    border-radius:20px;
+
 
 }
+
+
 
 .booking-box h1{
 
-    font-size:22px;
+
+    font-size:24px;
+
 
 }
+
+
+
 
 .checkboxGroup{
 
-    padding:15px;
+
+    padding:16px;
+
 
 }
+
+
+
 
 .checkboxGroup label{
 
-    padding:10px 6px;
 
-    font-size:14px;
+    padding:12px 10px;
+
+
+    font-size:15px;
+
+
+}
+
+
+
+.checkboxGroup input{
+
+
+    width:18px;
+
+
+    height:18px;
+
 
 }
 
-.booking-form input{
 
-    padding:0 14px;
+
+.submitBar button{
+
+
+    max-width:none;
+
 
 }
+
+
 
 .successPopup{
 
-    width:95%;
+
+    padding:24px;
+
 
 }
+
+
+
+.successPopup h2{
+
+
+    font-size:22px;
+
+
+}
+
+
+
+.successPopup p{
+
+
+    font-size:14px;
+
+
+}
+
+
+
+}
+
+
+
+
+@media(max-width:480px){
+
+
+
+.booking-box{
+
+
+    padding:18px;
+
+
+}
+
+
+
+.booking-box h1{
+
+
+    font-size:22px;
+
+
+}
+
+
+
+.checkboxGroup label{
+
+
+    font-size:14px;
+
+
+}
+
+
+
+.booking-form input{
+
+
+    font-size:15px;
+
+
+}
+
+
+
+.successPopup{
+
+
+    width:95%;
+
+
+}
+
+
 
 }

@@ -2,73 +2,236 @@ import nodemailer from "nodemailer";
 
 export const runtime = "nodejs";
 
-// 🔥 FIX: tạo transporter trong function để tránh cache lỗi env
-const createTransporter = () =>
-  nodemailer.createTransport({
-    product: "gmail",
+
+// ===============================
+// GMAIL SMTP
+// ===============================
+
+const createTransporter = () => {
+
+  return nodemailer.createTransport({
+
+    service: "gmail",
+
     auth: {
+
       user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS, // APP PASSWORD (KHÔNG phải password thường)
+
+      pass: process.env.EMAIL_PASS,
+
     },
-    tls: {
-      rejectUnauthorized: false,
-    },
+
   });
 
+};
+
+
+
+// ===============================
+// POST
+// ===============================
+
 export async function POST(req) {
+
+
   try {
+
+
     const body = await req.json();
 
-    // check env
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+
+
+    console.log("📩 Booking:", body);
+
+
+
+    if (
+      !process.env.EMAIL_USER ||
+      !process.env.EMAIL_PASS
+    ) {
+
       return Response.json({
-        success: false,
-        error: "Missing EMAIL env",
+
+        success:false,
+
+        error:"Missing email config"
+
       });
+
     }
+
+
 
     const transporter = createTransporter();
 
-    console.log("📩 Sending email...");
-await transporter.sendMail({
-  from: `"Website Booking" <${process.env.EMAIL_USER}>`,
-  to: process.env.EMAIL_USER,
-  subject: "📩 Khách hàng cần tư vấn mới",
-  html: `
-    <div style="font-family: Arial; line-height: 1.6">
-      <h2>📩 Có khách hàng mới đặt lịch</h2>
 
-      <p><b>👤 Họ tên:</b> ${body.name}</p>
 
-      <p><b>📞 Số điện thoại:</b> ${body.phone}</p>
+    await transporter.sendMail({
 
-      <p><b>📧 Email:</b> ${
-        body.email || "Không có"
-      }</p>
 
-      <p><b>🏠 Hình thức:</b> ${
-        body.productType
-      }</p>
 
-      <p><b>💅 Dịch vụ:</b></p>
+      from:
+
+      `"FPT Telecom Website" <${process.env.EMAIL_USER}>`,
+
+
+
+      to:
+
+      process.env.EMAIL_USER,
+
+
+
+      subject:
+
+      "📩 Khách hàng đăng ký tư vấn FPT Telecom",
+
+
+
+      html:`
+
+
+      <div
+
+      style="
+      font-family:Arial;
+      padding:20px;
+      color:#333;
+      "
+
+      >
+
+
+
+      <h2>
+
+      📩 Có khách hàng mới đăng ký
+
+      </h2>
+
+
+
+      <hr />
+
+
+
+      <p>
+
+      <b>👤 Họ tên:</b>
+
+      ${body.name}
+
+      </p>
+
+
+
+      <p>
+
+      <b>📞 Số điện thoại:</b>
+
+      ${body.phone}
+
+      </p>
+
+
+
+
+      <p>
+
+      <b>📌 Dịch vụ quan tâm:</b>
+
+      </p>
+
+
 
       <ul>
-        ${body.products
-          ?.map((item) => `<li>${item}</li>`)
-          .join("")}
+
+
+      ${
+        body.products && body.products.length
+
+        ?
+
+        body.products
+        .map(
+          item=>`
+
+          <li>
+          ${item}
+          </li>
+
+          `
+        )
+        .join("")
+
+        :
+
+        "<li>Không chọn dịch vụ</li>"
+
+      }
+
+
       </ul>
-    </div>
-  `,
-});
+
+
+
+      <hr />
+
+
+
+      <p>
+
+      Website FPT Telecom
+
+      </p>
+
+
+
+      </div>
+
+
+      `
+
+
+    });
+
+
+
     console.log("✅ Email sent");
 
-    return Response.json({ success: true });
-  } catch (err) {
-    console.error("❌ Mail error:", err);
+
 
     return Response.json({
-      success: false,
-      error: err.message,
+
+      success:true
+
     });
+
+
+
   }
+
+  catch(error){
+
+
+    console.error(
+      "❌ Mail error:",
+      error
+    );
+
+
+
+    return Response.json({
+
+      success:false,
+
+      error:error.message
+
+    });
+
+
+
+  }
+
+
 }

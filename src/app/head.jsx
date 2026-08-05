@@ -1,7 +1,7 @@
 export default function Head() {
   return (
     <>
-      <title>Nhà Ngọc</title>
+      <title>FPT</title>
 
       <meta
         name="google-site-verification"

@@ -1,562 +1,753 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import "./page.css";
 import BackButton from "@/components/BackButton/BackButton";
 
-export default function EditProductPage() {
-  const params = useParams();
-  const router = useRouter();
 
-  const id = params?.id;
+export default function EditServicePage(){
 
-  const editorRef = useRef(null);
+const params = useParams();
+const router = useRouter();
 
-  const [uploading, setUploading] =
-    useState(false);
-const [descLoading, setDescLoading] = useState(false);
-const [contentLoading, setContentLoading] = useState(false);
-  const [loading, setLoading] =
-    useState(false);
-const [categories, setCategories] = useState([]);
-const [oldImage, setOldImage] = useState("");
-const [form, setForm] = useState({
-  name: "",
-  slug: "",
-  price: "",
-  sale_price: "",
-  category_ids: [],
-  description: "",
-  content: "",
-  image: "",
-  status: "available",
-  featured: false,
+const id = params?.id;
+
+
+const [loading,setLoading]=useState(false);
+const [uploading,setUploading]=useState(false);
+
+const [categories,setCategories]=useState([]);
+
+const [oldImage,setOldImage]=useState("");
+
+
+const [form,setForm]=useState({
+
+name:"",
+slug:"",
+image:"",
+speed:"",
+category_ids:[]
+
 });
-const generateDescription = async () => {
-  if (!form.name.trim()) {
-    return alert("Nhập tên sản phẩm trước");
-  }
-
-  try {
-    setDescLoading(true);
-
-    const res = await fetch("/api/ai/product", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        type: "description",
-        name: form.name,
-      }),
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      throw new Error(data.error || "AI lỗi");
-    }
-
-    setForm((prev) => ({
-      ...prev,
-      description: data.description,
-    }));
-
-  } catch (err) {
-    alert(err.message);
-  } finally {
-    setDescLoading(false);
-  }
-};
 
 
 
-const generateContent = async () => {
-  if (!form.name.trim()) {
-    return alert("Nhập tên sản phẩm trước");
-  }
+// ==========================
+// LOAD CATEGORY
+// ==========================
 
-  try {
-    setContentLoading(true);
+useEffect(()=>{
 
-    const res = await fetch("/api/ai/product", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        type: "content",
-        name: form.name,
-      }),
-    });
 
-    const data = await res.json();
+const loadCategories=async()=>{
 
-    if (!res.ok) {
-      throw new Error(data.error || "AI lỗi");
-    }
 
-    setForm((prev) => ({
-      ...prev,
-      content: data.content,
-    }));
+const {data,error}=await supabase
 
-  } catch (err) {
-    alert(err.message);
-  } finally {
-    setContentLoading(false);
-  }
-};
-  // =========================
-  // SLUG
-  // =========================
-useEffect(() => {
-  const fetchCategories = async () => {
-    const { data } = await supabase
-      .from("categories")
-      .select("id,name")
-      .order("name");
+.from("categories")
 
-    setCategories(data || []);
-  };
+.select("id,name")
 
-  fetchCategories();
-}, []);
-  const sanitize = (text) => {
-    return text
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/đ/g, "d")
-      .replace(/[^a-z0-9\s-]/g, "")
-      .trim()
-      .replace(/\s+/g, "-")
-      .replace(/-+/g, "-");
-  };
+.order("name");
 
-  const randomString = () =>
-    Math.random()
-      .toString(36)
-      .substring(2, 8);
 
-  // =========================
-  // FETCH DATA
-  // =========================
-const getStoragePath = (url) => {
-  if (!url) return null;
+if(error){
 
-  const parts = url.split("/images_product/");
+console.log(error);
+return;
 
-  return parts.length > 1
-    ? decodeURIComponent(parts[1])
-    : null;
-};
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!id) return;
-
-      const { data, error } =
-        await supabase
-          .from("products")
-          .select("*")
-          .eq("id", id)
-          .maybeSingle();
-
-      if (error) {
-        console.log(error);
-        return;
-      }
-
-  if (data) {
-
-  setOldImage(data.image || "");
-
-  setForm({
-  name: data.name || "",
-  slug: data.slug || "",
-  price: data.price || "",
-  sale_price: data.sale_price || "",
-category_ids: data.category_ids || [],
-  description: data.description || "",
-  content: data.content || "",
-  image: data.image || "",
-  status: data.status || "available",
-  featured: data.featured || false,
-});
-      }
-    };
-
-    fetchData();
-  }, [id]);
-
-  // =========================
-  // UPLOAD IMAGE
-  // =========================
-
-  const handleUploadImage =
-    async (e) => {
-      const file =
-        e.target.files?.[0];
-
-      if (!file) return;
-
-      try {
-        setUploading(true);
-
-        const fileExt =
-          file.name
-            .split(".")
-            .pop();
-
-        const fileName = `${
-          form.slug || "product"
-        }-${Date.now()}-${randomString()}.${fileExt}`;
-
-        const { error } =
-          await supabase.storage
-            .from(
-              "images_product"
-            )
-            .upload(
-              fileName,
-              file
-            );
-
-        if (error) {
-          console.log(error);
-          alert(
-            "Upload ảnh thất bại"
-          );
-          return;
-        }
-
-        const { data } =
-          supabase.storage
-            .from(
-              "images_product"
-            )
-            .getPublicUrl(
-              fileName
-            );
-
-        setForm((prev) => ({
-          ...prev,
-          image:
-            data.publicUrl,
-        }));
-      } catch (err) {
-        console.log(err);
-
-        alert(
-          "Upload ảnh thất bại"
-        );
-      } finally {
-        setUploading(false);
-      }
-    };
-
-  // =========================
-  // UPDATE
-  // =========================
-
-  const update = async () => {
-    try {
-      setLoading(true);
-
-      const { error } =
-      await supabase
-  .from("products")
-  .update({
-    name: form.name,
-    slug: form.slug,
-    price: Number(form.price),
-    sale_price: form.sale_price
-      ? Number(form.sale_price)
-      : null,
-category_ids: form.category_ids,
-      description: form.description,
-    content: form.content,
-    image: form.image,
-    status: form.status,
-    featured: form.featured,
-    updated_at: new Date().toISOString(),
-  })
-  .eq("id", id);
-      if (error) {
-        console.log(error);
-
-        alert(error.message);
-
-        return;
-      }
-// Nếu đã đổi ảnh thì xóa ảnh cũ
-if (oldImage && oldImage !== form.image) {
-  const oldPath = getStoragePath(oldImage);
-
-  if (oldPath) {
-    const { error: removeError } =
-      await supabase.storage
-        .from("images_product")
-        .remove([oldPath]);
-
-    if (removeError) {
-      console.log("Lỗi xóa ảnh:", removeError);
-    }
-  }
-
-  setOldImage(form.image);
 }
-      alert(
-        "Cập nhật thành công!"
-      );
-
-      router.refresh();
-    } catch (err) {
-      console.log(err);
-
-      alert("Lỗi cập nhật");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // =========================
-  // UI
-  // =========================
-
-  return (
-    <div className="editProductPage">
-    <div className="editProductCard">
-
-  <div className="headerLeft">
-    <BackButton />
-    <h1>Sửa sản phẩm</h1>
-  </div>
 
 
-        <input
-          placeholder="Name"
-          value={form.name}
-          onChange={(e) => {
-            const name =
-              e.target.value;
+setCategories(data || []);
 
-            setForm({
-              ...form,
-              name,
-              slug:
-                sanitize(
-                  name
-                ),
-            });
-          }}
-        />
 
-        {/* SLUG */}
+};
 
-        <input
-          placeholder="Slug"
-          value={form.slug}
-          onChange={(e) =>
-            setForm({
-              ...form,
-              slug:
-                sanitize(
-                  e.target.value
-                ),
-            })
-          }
-        />
 
-        {/* CATEGORY */}
+loadCategories();
 
-      <div className="categoryBox">
-  {categories.map((item) => (
-    <label
-      key={item.id}
-      className="categoryItem"
-    >
-      <input
-        type="checkbox"
-        checked={form.category_ids.includes(item.id)}
-        onChange={(e) => {
-          if (e.target.checked) {
-            setForm({
-              ...form,
-              category_ids: [
-                ...form.category_ids,
-                item.id,
-              ],
-            });
-          } else {
-            setForm({
-              ...form,
-              category_ids:
-                form.category_ids.filter(
-                  (id) => id !== item.id
-                ),
-            });
-          }
-        }}
-      />
 
-      {item.name}
-    </label>
-  ))}
+},[]);
+
+
+
+// ==========================
+// SLUG
+// ==========================
+
+const sanitize=(text)=>{
+
+return text
+
+.toLowerCase()
+
+.normalize("NFD")
+
+.replace(/[\u0300-\u036f]/g,"")
+
+.replace(/đ/g,"d")
+
+.replace(/[^a-z0-9\s-]/g,"")
+
+.trim()
+
+.replace(/\s+/g,"-")
+
+.replace(/-+/g,"-");
+
+};
+
+
+
+// ==========================
+// LOAD SERVICE
+// ==========================
+
+
+useEffect(()=>{
+
+
+const fetchData=async()=>{
+
+
+if(!id)return;
+
+
+
+const {
+data,
+error
+}=await supabase
+
+.from("services")
+
+.select("*")
+
+.eq("id",id)
+
+.single();
+
+
+
+if(error){
+
+console.log(error);
+return;
+
+}
+
+
+
+
+const {
+data:cats
+}=await supabase
+
+.from("service_categories")
+
+.select("category_id")
+
+.eq(
+"service_id",
+id
+);
+
+
+
+setOldImage(
+data.image || ""
+);
+
+
+
+setForm({
+
+name:data.name || "",
+
+slug:data.slug || "",
+
+image:data.image || "",
+
+speed:data.speed || "",
+
+
+category_ids:
+
+cats
+
+?
+
+cats.map(
+item=>item.category_id
+)
+
+:
+
+[]
+
+
+});
+
+
+
+};
+
+
+fetchData();
+
+
+},[id]);
+
+
+
+
+
+// ==========================
+// UPLOAD IMAGE
+// ==========================
+
+
+const randomString=()=>{
+
+return Math.random()
+
+.toString(36)
+
+.substring(2,8);
+
+};
+
+
+
+const handleUploadImage=async(e)=>{
+
+
+const file=e.target.files?.[0];
+
+
+if(!file)return;
+
+
+
+try{
+
+
+setUploading(true);
+
+
+
+const ext=file.name.split(".").pop();
+
+
+const fileName=
+
+`${form.slug}-${Date.now()}-${randomString()}.${ext}`;
+
+
+
+const {
+error
+}=await supabase.storage
+
+.from("images_service")
+
+.upload(
+fileName,
+file
+);
+
+
+
+if(error)
+throw error;
+
+
+
+const {
+data
+}=supabase.storage
+
+.from("images_service")
+
+.getPublicUrl(
+fileName
+);
+
+
+
+setForm(prev=>({
+
+...prev,
+
+image:data.publicUrl
+
+}));
+
+
+
+}
+catch(err){
+
+console.log(err);
+
+alert(
+"Upload ảnh lỗi"
+);
+
+
+}
+finally{
+
+setUploading(false);
+
+}
+
+
+};
+
+
+
+// ==========================
+// UPDATE
+// ==========================
+
+
+const update=async()=>{
+
+
+try{
+
+
+setLoading(true);
+
+
+
+// update service
+
+
+const {
+error
+}=await supabase
+
+.from("services")
+
+.update({
+
+name:form.name,
+
+slug:form.slug,
+
+image:form.image,
+
+speed:form.speed
+
+
+})
+
+.eq(
+"id",
+id
+);
+
+
+
+if(error)
+throw error;
+
+
+
+
+
+// xóa category cũ
+
+
+await supabase
+
+.from("service_categories")
+
+.delete()
+
+.eq(
+"service_id",
+id
+);
+
+
+
+
+
+// thêm category mới
+
+
+if(form.category_ids.length){
+
+
+
+const rows=
+
+form.category_ids.map(
+category_id=>({
+
+service_id:id,
+
+category_id
+
+})
+
+);
+
+
+
+const {
+error:catError
+}=await supabase
+
+.from("service_categories")
+
+.insert(rows);
+
+
+
+if(catError)
+throw catError;
+
+
+
+}
+
+
+
+alert(
+"Cập nhật dịch vụ thành công"
+);
+
+
+
+router.refresh();
+
+
+
+}
+catch(err){
+
+console.log(err);
+
+alert(
+err.message
+);
+
+
+}
+finally{
+
+setLoading(false);
+
+}
+
+
+};
+
+
+
+
+
+return (
+
+<div className="editServicePage">
+
+
+<div className="editServiceCard">
+
+
+
+<div className="headerLeft">
+
+<BackButton/>
+
+<h1>
+Sửa dịch vụ
+</h1>
+
 </div>
 
-        {/* PRICE */}
 
-        <input
-          placeholder="Price"
-          value={form.price}
-          onChange={(e) =>
-            setForm({
-              ...form,
-              price:
-                e.target.value,
-            })
-          }
-        />
+
+
+
 <input
-    type="number"
-    placeholder="Giá khuyến mãi"
-    value={form.sale_price}
-    onChange={(e)=>
-        setForm({
-            ...form,
-            sale_price:e.target.value
-        })
-    }
+
+placeholder="Tên dịch vụ"
+
+value={form.name}
+
+onChange={(e)=>{
+
+
+const name=e.target.value;
+
+
+setForm({
+
+...form,
+
+name,
+
+slug:sanitize(name)
+
+});
+
+
+}}
+
 />
-<textarea
-  placeholder="Mô tả ngắn"
-  value={form.description}
-  onChange={(e) =>
-    setForm({
-      ...form,
-      description:e.target.value,
-    })
-  }
+
+
+
+
+
+<input
+
+placeholder="Slug"
+
+value={form.slug}
+
+onChange={(e)=>
+
+setForm({
+
+...form,
+
+slug:sanitize(
+e.target.value
+)
+
+})
+
+}
+
 />
+
+
+
+
+
+
+
+
+<input
+
+placeholder="Tốc độ"
+
+value={form.speed}
+
+onChange={(e)=>
+
+setForm({
+
+...form,
+
+speed:e.target.value
+
+})
+
+}
+
+/>
+
+
+
+
+
+<h3>
+Danh mục
+</h3>
+
+
+
+<div className="categoryBox">
+
+
+{
+
+categories.map(item=>(
+
+
+<label
+
+key={item.id}
+
+className="categoryItem"
+
+>
+
+
+<input
+
+type="checkbox"
+
+
+checked={
+form.category_ids.includes(item.id)
+}
+
+
+onChange={(e)=>{
+
+
+setForm(prev=>({
+
+
+...prev,
+
+
+category_ids:
+
+
+e.target.checked
+
+
+?
+
+
+[
+
+...prev.category_ids,
+
+item.id
+
+]
+
+
+:
+
+
+prev.category_ids.filter(
+
+id=>id!==item.id
+
+)
+
+
+}));
+
+
+}}
+
+
+/>
+
+
+{item.name}
+
+
+</label>
+
+
+))
+
+
+}
+
+
+
+</div>
+
+
+
+
+
+
+<div className="uploadBox">
+
+
+<input
+
+type="file"
+
+accept="image/*"
+
+onChange={handleUploadImage}
+
+/>
+
+
+{
+
+uploading &&
+
+<p>
+Đang upload...
+</p>
+
+}
+
+
+
+{
+
+form.image &&
+
+<img
+
+src={form.image}
+
+className="previewImage"
+
+/>
+
+}
+
+
+
+</div>
+
+
+
+
+
 
 
 <button
-  type="button"
-  className="aiBtn"
-  onClick={generateDescription}
-  disabled={descLoading}
+
+className="saveBtn"
+
+onClick={update}
+
+disabled={loading}
+
 >
+
+
 {
- descLoading
- ? "Đang tạo..."
- : "✨ Tạo mô tả"
+
+loading
+
+?
+
+"Đang lưu..."
+
+:
+
+"Cập nhật"
+
 }
+
+
 </button>
 
 
 
-<textarea
-  className="editor"
-  placeholder="Nội dung HTML"
-  value={form.content}
-  onChange={(e)=>
-    setForm({
-      ...form,
-      content:e.target.value,
-    })
-  }
-/>
+</div>
 
 
-<button
-  type="button"
-  className="aiBtn"
-  onClick={generateContent}
-  disabled={contentLoading}
->
-{
- contentLoading
- ? "Đang tạo..."
- : "✨ Tạo content"
-}
-</button>
-        {/* IMAGE */}
+</div>
 
-        <div className="uploadBox">
-          <input
-            type="file"
-            onChange={
-              handleUploadImage
-            }
-          />
 
-          {uploading && (
-            <p>
-              Đang upload...
-            </p>
-          )}
+);
 
-          {form.image && (
-            <img
-              src={form.image}
-              alt=""
-              className="previewImage"
-            />
-          )}
-        </div>
 
-        {/* STATUS */}
-
-    <select
-    value={form.status}
-    onChange={(e)=>
-        setForm({
-            ...form,
-            status:e.target.value
-        })
-    }
->
-    <option value="available">
-        Còn hàng
-    </option>
-
-    <option value="out_of_stock">
-        Hết hàng
-    </option>
-</select>
-        {/* FEATURED */}
-
-        <label className="checkbox">
-          <input
-            type="checkbox"
-            checked={
-              form.featured
-            }
-            onChange={(e) =>
-              setForm({
-                ...form,
-                featured:
-                  e.target.checked,
-              })
-            }
-          />
-
-          Featured
-        </label>
-
-        {/* BUTTON */}
-
-   <button
-  className="saveBtn"
-  onClick={update}
-  disabled={loading}
->
-  {loading ? "Đang lưu..." : "Cập nhật"}
-</button>
-      </div>
-    </div>
-  );
 }

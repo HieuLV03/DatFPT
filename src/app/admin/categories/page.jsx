@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
-import "./page.css";
 import BackButton from "../components/BackButton/BackButton";
+import "./page.css";
 
 export default function CategoriesPage() {
   const [categories, setCategories] = useState([]);
@@ -19,11 +19,10 @@ export default function CategoriesPage() {
     const { data, error } = await supabase
       .from("categories")
       .select("*")
-      .order("created_at", {
-        ascending: false,
-      });
+      .order("created_at", { ascending: false });
 
     if (error) {
+      console.log(error);
       alert(error.message);
     } else {
       setCategories(data || []);
@@ -43,25 +42,39 @@ export default function CategoriesPage() {
     if (!category?.id) return;
 
     const ok = confirm(
-      "Bạn có chắc muốn xóa danh mục này?"
+      `Bạn có chắc muốn xóa "${category.name}"?`
     );
 
     if (!ok) return;
 
     try {
-      // Xóa ảnh storage nếu có
-      if (category.path) {
-        const { error: storageError } =
-          await supabase.storage
-            .from("categories")
-            .remove([category.path]);
+      // =========================
+      // XÓA ẢNH STORAGE
+      // =========================
+      if (category.image) {
+        let filePath = category.image;
 
-        if (storageError) {
-          console.log(storageError.message);
+        // Nếu đang lưu URL thì tách path
+        if (category.image.startsWith("http")) {
+          filePath =
+            category.image.split("/categories/")[1];
+        }
+
+        if (filePath) {
+          const { error: storageError } =
+            await supabase.storage
+              .from("categories")
+              .remove([filePath]);
+
+          if (storageError) {
+            console.log(storageError.message);
+          }
         }
       }
 
-      // Xóa database
+      // =========================
+      // XÓA DATABASE
+      // =========================
       const { error } = await supabase
         .from("categories")
         .delete()
@@ -72,7 +85,6 @@ export default function CategoriesPage() {
         return;
       }
 
-      // Update UI
       setCategories((prev) =>
         prev.filter((item) => item.id !== category.id)
       );
@@ -80,6 +92,7 @@ export default function CategoriesPage() {
       alert("Đã xóa danh mục!");
     } catch (err) {
       console.log(err);
+      alert("Có lỗi xảy ra.");
     }
   };
 
@@ -105,7 +118,7 @@ export default function CategoriesPage() {
       {loading ? (
         <p>Đang tải...</p>
       ) : categories.length === 0 ? (
-        <p>Không có dữ liệu</p>
+        <p>Không có dữ liệu.</p>
       ) : (
         <div className="grid">
           {categories.map((item) => (
@@ -113,8 +126,8 @@ export default function CategoriesPage() {
               key={item.id}
               className="card"
               style={{
-                backgroundImage: item.img
-                  ? `url(${item.img})`
+                background: item.image
+                  ? `url(${item.image}) center/cover`
                   : "linear-gradient(135deg,#334155,#111827)",
               }}
             >
@@ -125,6 +138,11 @@ export default function CategoriesPage() {
 
                 <p>
                   <strong>Slug:</strong> {item.slug}
+                </p>
+
+                <p>
+                  <strong>Trạng thái:</strong>{" "}
+                  {item.status ? "Hiển thị" : "Ẩn"}
                 </p>
 
                 <p>
