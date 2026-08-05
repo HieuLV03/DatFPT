@@ -12,177 +12,238 @@ import "swiper/css/scrollbar";
 
 import "./ServiceList.css";
 
+
 export default function ServiceList({
   services = [],
 }) {
 
+  if (!services.length) return null;
+
+
   return (
-    <>
-      {services.length > 0 && (
 
-        <Swiper
-          modules={[
-            Navigation,
-            Scrollbar,
-          ]}
+    <div className="serviceSwiperWrapper">
+<div className="serviceSwiperWrapper">
 
-          className="serviceSwiper"
+      <Swiper
 
-          centeredSlides
-          centeredSlidesBounds
-          watchOverflow
+        modules={[
+          Navigation,
+          Scrollbar,
+        ]}
 
-          grabCursor
-          speed={600}
+        className="serviceSwiper"
 
-          scrollbar={{
-            draggable: true,
-            hide: false,
-          }}
 
-          breakpoints={{
+        /* QUAN TRỌNG */
+        slidesPerView="auto"
 
-            // MOBILE
-            0: {
-              slidesPerView: 1.4,
-              spaceBetween: 16,
-            },
+        spaceBetween={20}
 
-            // TABLET
-            768: {
-              slidesPerView: 3,
-              spaceBetween: 24,
-            },
 
-            // DESKTOP
-            1200: {
-              slidesPerView: 5,
-              spaceBetween: 30,
-            },
+        centeredSlides={true}
 
-          }}
+        centeredSlidesBounds={true}
 
-        >
 
-          {services.map((item, index) => (
+        grabCursor={true}
 
-            <SwiperSlide
-              key={item.id}
-              className="serviceSlide"
+        watchOverflow={true}
+
+
+        speed={600}
+
+
+        scrollbar={{
+          draggable:true,
+          hide:false,
+        }}
+
+      >
+
+        {services.map((item,index)=>(
+
+          <SwiperSlide
+
+            key={item.id}
+
+            className="serviceSlide"
+
+          >
+
+
+            <motion.div
+
+              className="serviceCard"
+
+
+              initial={{
+                opacity:0,
+                y:40,
+              }}
+
+
+              whileInView={{
+                opacity:1,
+                y:0,
+              }}
+
+
+              viewport={{
+                once:true,
+              }}
+
+
+              transition={{
+                duration:.45,
+                delay:index*.08,
+              }}
+
             >
 
-              <motion.div
 
-                className="serviceCard"
+              {item.badge && (
 
-                initial={{
-                  opacity: 0,
-                  y: 40,
-                }}
+                <div className="serviceBadge">
+                  {item.badge}
+                </div>
 
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                }}
+              )}
 
-                viewport={{
-                  once: true,
-                }}
 
-                transition={{
-                  duration: .45,
-                  delay: index * .08,
-                }}
+
+              <div className="serviceImage">
+
+                {item.image && (
+
+                  <img
+
+                    src={item.image}
+
+                    alt={item.name || "Dịch vụ"}
+
+                    className="serviceImg"
+
+                  />
+
+                )}
+
+              </div>
+
+
+
+
+              <div className="serviceTitle">
+
+
+                <h2>
+                  {item.name}
+                </h2>
+
+
+                <p>
+                  {item.description}
+                </p>
+
+
+
+                {item.speed && (
+
+                  <div className="serviceSpeed">
+
+                    🚀 {item.speed}
+
+                  </div>
+
+                )}
+
+
+
+                <div className="servicePrice">
+
+
+                  {item.old_price && (
+
+                    <span className="oldPrice">
+
+                      {Number(item.old_price)
+                        .toLocaleString("vi-VN")}đ
+
+                    </span>
+
+                  )}
+
+
+
+                  <span className="newPrice">
+
+                    {Number(item.price)
+                    .toLocaleString("vi-VN")}đ/tháng
+
+                  </span>
+
+
+                </div>
+
+
+              </div>
+
+
+
+
+
+              <div className="serviceFeatures">
+
+
+                {Array.isArray(item.features) &&
+
+                  item.features.map((feature,i)=>(
+
+                    <div key={i}>
+
+                      ✓ {feature}
+
+                    </div>
+
+                  ))
+
+                }
+
+
+              </div>
+
+
+
+
+
+              <Link
+
+                href={`/services/${item.slug || item.id}`}
+
+                className="serviceButton"
 
               >
 
-                {item.badge && (
-                  <div className="serviceBadge">
-                    {item.badge}
-                  </div>
-                )}
+                {item.button_text || "Xem chi tiết"}
 
-                <div className="serviceImage">
+              </Link>
 
-                  {item.image && (
 
-                    <img
-                      src={item.image}
-                      alt={item.name || "Dịch vụ FPT"}
-                      className="serviceImg"
-                    />
 
-                  )}
+            </motion.div>
 
-                </div>
 
-                <div className="serviceTitle">
+          </SwiperSlide>
 
-                  <h2>
-                    {item.name}
-                  </h2>
 
-                  <p>
-                    {item.description}
-                  </p>
+        ))}
 
-                  {/* SPEED từ DB */}
-                  {item.speed && (
-                    <div className="serviceSpeed">
-                      🚀 {item.speed}
-                    </div>
-                  )}
 
-                  <div className="servicePrice">
+      </Swiper>
 
-                    {item.old_price && (
+</div>
+    </div>
 
-                      <span className="oldPrice">
-                        {Number(item.old_price).toLocaleString("vi-VN")}đ
-                      </span>
-
-                    )}
-
-                    <span className="newPrice">
-                      {Number(item.price).toLocaleString("vi-VN")}đ/tháng
-                    </span>
-
-                  </div>
-
-                </div>
-
-                <div className="serviceFeatures">
-
-                  {Array.isArray(item.features) &&
-                    item.features.map((feature, i) => (
-
-                      <div key={i}>
-                        ✓ {feature}
-                      </div>
-
-                    ))}
-
-                </div>
-
-                <Link
-                  href={`/services/${item.slug || item.id}`}
-                  className="serviceButton"
-                >
-
-                  {item.button_text || "Xem chi tiết"}
-
-                </Link>
-
-              </motion.div>
-
-            </SwiperSlide>
-
-          ))}
-
-        </Swiper>
-
-      )}
-    </>
   );
 
 }

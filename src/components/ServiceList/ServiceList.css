@@ -8,23 +8,126 @@
 
     padding:42px 0 80px;
 
-    overflow:visible;
+    overflow:hidden;
 
 }
+
 
 .serviceSwiper .swiper-wrapper{
 
     align-items:stretch;
 
 }
+.serviceSwiperWrapper{
+
+    width:100%;
+
+    overflow:hidden;
+
+}
+/* =====================================================
+   CARD SIZE
+===================================================== */
 
 .serviceSlide{
 
+    width:320px;
+
     height:auto;
 
-    transition:
-        transform .35s ease,
-        opacity .35s ease;
+    flex-shrink:0;
+
+    display:flex;
+
+}
+
+
+.serviceCard{
+
+    width:100%;
+
+}
+
+
+
+@media(min-width:768px){
+
+    .serviceSlide{
+
+        width:340px;
+
+    }
+
+}
+
+
+
+@media(min-width:1200px){
+
+    .serviceSlide{
+
+        width:360px;
+
+    }
+
+}
+/* =====================================================
+   SLIDE WIDTH
+===================================================== */
+
+
+
+.serviceCard{
+
+    width:100%;
+
+}
+
+
+
+@media(min-width:768px){
+
+    .serviceSlide{
+
+        width:340px;
+
+    }
+
+}
+
+
+
+@media(min-width:1200px){
+
+    .serviceSlide{
+
+        width:360px;
+
+    }
+
+}
+/* =====================================================
+   SLIDE WIDTH
+===================================================== */
+
+
+
+/* TABLET */
+@media(min-width:768px){
+
+    .serviceSlide{
+        width:300px;
+    }
+
+}
+
+
+/* DESKTOP */
+@media(min-width:1200px){
+
+    .serviceSlide{
+        width:260px;
+    }
 
 }
 
