@@ -1,191 +1,377 @@
-.contact {
-  font-family: "Segoe UI", sans-serif;
-  background: linear-gradient(135deg, #eef6ff, #fff0f6);
-  padding: 39px 20px;
+.contactPage{
+  margin-top: 54px;
+    padding:40px 20px;
+    background:#f7f9fc;
+    min-height:100vh;
 }
 
-/* HERO */
-.contact-hero {
-  text-align: center;
-  background: linear-gradient(135deg, #4facfe, #ff7eb3);
-  color: white;
-  padding: 70px 20px;
-  border-radius: 20px;
-  margin-bottom: 30px;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+/* ===========================
+   HERO
+=========================== */
+
+.contactHero{
+    max-width:900px;
+    margin:0 auto 40px;
+    padding:70px 30px;
+    text-align:center;
+
+    background:linear-gradient(
+        180deg,
+        #ffffff 0%,
+        #3a8dd5 35%,
+        #3178ba 75%,
+        #054a90 100%
+    );
+
+    border:1px solid #dbeeff;
+    border-radius:22px;
+
+    box-shadow:
+        0 12px 35px rgba(0, 91, 234, .08);
+
+    overflow:hidden;
+    position:relative;
 }
 
-.contact-hero h1 {
-  font-size: 38px;
-  margin-bottom: 10px;
+.contactTag{
+    display:inline-block;
+    padding:8px 18px;
+    border-radius:999px;
+    background:rgba(255,255,255,.18);
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:16px;
 }
 
-.contact-hero p {
-  font-size: 15px;
-  opacity: 0.9;
-  max-width: 650px;
-  margin: 0 auto;
-  line-height: 1.6;
+.contactHero h1{
+    font-size:40px;
+    font-weight:700;
+    margin-bottom:16px;
 }
 
-/* LAYOUT */
-.contact-wrapper {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 25px;
+.contactHero p{
+    max-width:650px;
+    margin:auto;
+    line-height:1.7;
+    opacity:.95;
+    font-size:16px;
 }
 
-/* CARD */
-.contact-form,
-.contact-info {
-  background: white;
-  padding:18px 33px;
-  border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  border: 1px solid rgba(0,0,0,0.05);
+/* ===========================
+   CONTENT
+=========================== */
+
+.contactWrapper{
+    max-width:1200px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:28px;
 }
 
-/* TEXT */
-.contact-form p {
-  color: #666;
-  margin-bottom: 18px;
-  font-size: 14px;
+/* ===========================
+   CARD
+=========================== */
+
+.contactForm,
+.contactInfo{
+    background:#fff;
+    border-radius:18px;
+    padding:32px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
 }
 
-/* INPUT + SELECT + TEXTAREA (THÊM SELECT CHO BOOKING STYLE) */
-.contact-form input,
-.contact-form textarea,
-.contact-form select {
-  width: 100%;
-  margin-bottom: 14px;
-  padding: 12px 14px;
-  border: 1px solid #e5e5e5;
-  border-radius: 10px;
-  outline: none;
-  font-size: 14px;
-  background: #fafafa;
-  transition: 0.2s;
+.contactForm h2,
+.contactInfo h2{
+    margin-bottom:10px;
+    color:#222;
+    font-size:28px;
 }
 
-.contact-form input:focus,
-.contact-form textarea:focus,
-.contact-form select:focus {
-  border-color: #4facfe;
-  background: #fff;
-  box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.15);
+.contactForm>p{
+    color:#666;
+    margin-bottom:24px;
 }
 
-.contact-form textarea {
-  min-height: 120px;
-  resize: none;
+/* ===========================
+   FORM
+=========================== */
+
+.booking-form{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
 }
 
-/* CHECKBOX GROUP (GIỐNG BOOKING) */
-.checkboxGroup {
-  margin: 10px 0 18px;
+.booking-form input,
+.booking-form textarea{
+    width:100%;
+    padding:14px 16px;
+    border:1px solid #dcdcdc;
+    border-radius:12px;
+    font-size:15px;
+    transition:.25s;
+    background:#fff;
 }
 
-.checkboxTitle {
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 10px;
-  color: #333;
+.booking-form input:focus,
+.booking-form textarea:focus{
+    outline:none;
+    border-color:#005bea;
+    box-shadow:0 0 0 4px rgba(0,91,234,.12);
 }
 
-.checkboxGroup label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-  font-size: 14px;
-  color: #444;
-  cursor: pointer;
+.booking-form textarea{
+    resize:vertical;
+    min-height:120px;
 }
 
-.checkboxGroup input {
-  width: auto;
+/* ===========================
+   CHECKBOX
+=========================== */
+
+.checkboxGroup{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
 }
 
-/* BUTTON */
-.contact-form button {
-  width: 100%;
-  padding: 13px;
-  background: linear-gradient(135deg, #4facfe, #ff7eb3);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 15px;
-  transition: 0.3s;
+.checkboxTitle{
+    font-size:16px;
+    font-weight:600;
+    color:#222;
 }
 
-.contact-form button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(255, 126, 179, 0.25);
+.checkboxGroup label{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    cursor:pointer;
+    padding:12px 14px;
+    border:1px solid #e5e5e5;
+    border-radius:12px;
+    transition:.25s;
 }
 
-.contact-form button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+.checkboxGroup label:hover{
+    border-color:#005bea;
+    background:#f5f9ff;
 }
 
-/* INFO */
-.contact-info h2 {
-  margin-bottom: 15px;
-  font-size: 20px;
+.checkboxGroup input{
+    width:18px;
+    height:18px;
+    accent-color:#005bea;
 }
 
-.contact-info p {
-  margin-bottom: 12px;
-  font-size: 14px;
-  color: #555;
+/* ===========================
+   BUTTON
+=========================== */
+
+.booking-form button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(135deg,#005bea,#00c6fb);
+    color:#fff;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.25s;
 }
 
-/* NOTE */
-.contact-note {
-  margin-top: 20px;
-  padding: 15px;
-  background: linear-gradient(135deg, #e6f3ff, #ffe6f1);
-  border-left: 4px solid #ff7eb3;
-  border-radius: 10px;
-  font-size: 13px;
-  line-height: 1.5;
-  color: #333;
+.booking-form button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(0,91,234,.25);
 }
 
-/* POPUP (DÙNG CHUNG BOOKING) */
-.successOverlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
+.booking-form button:disabled{
+    opacity:.7;
+    cursor:not-allowed;
 }
 
-.successPopup {
-  background: white;
-  padding: 25px;
-  border-radius: 16px;
-  text-align: center;
-  width: 90%;
-  max-width: 360px;
+.bookingNote{
+    text-align:center;
+    color:#666;
+    font-size:14px;
+    line-height:1.6;
 }
 
-.successIcon {
-  font-size: 32px;
-  margin-bottom: 10px;
+/* ===========================
+   INFO
+=========================== */
+
+.contactInfo{
+    height:fit-content;
 }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .contact-wrapper {
-    grid-template-columns: 1fr;
-  }
+.infoItem{
+    padding:14px 0;
+    border-bottom:1px solid #eee;
+    color:#444;
+    line-height:1.6;
+}
 
-  .contact-hero h1 {
-    font-size: 26px;
-  }
+.infoItem:last-child{
+    border-bottom:none;
+}
+
+.contactNote{
+    margin-top:25px;
+    padding:18px;
+    border-radius:12px;
+    background:#f2f8ff;
+    border-left:4px solid #005bea;
+    color:#444;
+    line-height:1.7;
+}
+
+/* ===========================
+   POPUP
+=========================== */
+
+.popupOverlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+}
+
+.popup{
+    width:90%;
+    max-width:420px;
+    background:#fff;
+    border-radius:18px;
+    padding:30px;
+    text-align:center;
+    animation:popup .25s ease;
+}
+
+.error{
+    border-top:5px solid #ff4d4f;
+}
+
+.popupIcon{
+    font-size:50px;
+    margin-bottom:12px;
+}
+
+.popup h2{
+    margin-bottom:12px;
+    color:#222;
+}
+
+.popup p{
+    color:#666;
+    line-height:1.7;
+    margin-bottom:20px;
+}
+
+.popup button{
+    padding:12px 26px;
+    border:none;
+    border-radius:10px;
+    background:#005bea;
+    color:#fff;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.popup button:hover{
+    opacity:.9;
+}
+
+@keyframes popup{
+
+    from{
+
+        opacity:0;
+        transform:translateY(20px) scale(.95);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:translateY(0) scale(1);
+
+    }
+
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:992px){
+
+    .contactWrapper{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .contactPage{
+
+        padding:30px 16px;
+
+    }
+
+    .contactHero{
+
+        padding:45px 20px;
+
+    }
+
+    .contactHero h1{
+
+        font-size:30px;
+
+    }
+
+    .contactHero p{
+
+        font-size:15px;
+
+    }
+
+    .contactForm,
+    .contactInfo{
+
+        padding:24px;
+
+    }
+
+}
+
+@media(max-width:480px){
+
+    .contactHero h1{
+
+        font-size:26px;
+
+    }
+
+    .contactForm h2,
+    .contactInfo h2{
+
+        font-size:22px;
+
+    }
+
+    .booking-form input,
+    .booking-form textarea{
+
+        padding:13px 14px;
+
+    }
+
 }

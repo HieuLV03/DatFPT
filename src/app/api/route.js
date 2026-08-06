@@ -148,11 +148,11 @@ export async function POST(req) {
 
 
       ${
-        body.products && body.products.length
+        body.services && body.services.length
 
         ?
 
-        body.products
+        body.services
         .map(
           item=>`
 
@@ -173,6 +173,15 @@ export async function POST(req) {
 
       </ul>
 
+    <p>
+      <strong>📝 Ghi chú:</strong><br>
+      ${
+        body.message?.trim()
+          ? body.message
+              .replace(/\n/g, "<br>")
+          : "<i>Không có ghi chú</i>"
+      }
+    </p>
 
 
       <hr />

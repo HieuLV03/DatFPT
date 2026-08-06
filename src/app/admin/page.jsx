@@ -3,17 +3,18 @@ import { supabase } from "@/lib/supabase";
 import "./admin.css";
 
 export default async function Dashboard() {
-const [
-  { count: postCount },
-  { count: categoryCount },
-  { count: productCount },
-  { count: sliderCount },
-] = await Promise.all([
-  supabase.from("posts").select("id", { count: "exact", head: true }),
-  supabase.from("categories").select("id", { count: "exact", head: true }),
-  supabase.from("products").select("id", { count: "exact", head: true }),
-  supabase.from("sliders").select("id", { count: "exact", head: true }),
-]);
+  const [
+    { count: postCount },
+    { count: categoryCount },
+    { count: serviceCount },
+    { count: sliderCount },
+  ] = await Promise.all([
+    supabase.from("posts").select("id", { count: "exact", head: true }),
+    supabase.from("categories").select("id", { count: "exact", head: true }),
+    supabase.from("services").select("id", { count: "exact", head: true }),
+    supabase.from("sliders").select("id", { count: "exact", head: true }),
+  ]);
+
   return (
     <div className="dashboard">
       <div className="dashboardHeader">
@@ -41,10 +42,10 @@ const [
         </Link>
 
         <Link href="/admin/services" className="card">
-          <div className="cardIcon">📦</div>
+          <div className="cardIcon">💎</div>
           <div>
-            <h3>Sản phẩm</h3>
-            <span>{productCount ?? 0}</span>
+            <h3>Dịch vụ</h3>
+            <span>{serviceCount ?? 0}</span>
           </div>
         </Link>
 

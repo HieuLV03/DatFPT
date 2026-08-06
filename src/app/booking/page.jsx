@@ -13,7 +13,9 @@ const [categories,setCategories] = useState([]);
 
     name:"",
     phone:"",
-    products:[]
+    services:[],
+      message:""
+
 
   });
 
@@ -144,8 +146,8 @@ fetchCategories();
 
         ...prev,
 
-        products:[
-          ...prev.products,
+        services:[
+          ...prev.services,
           value
         ]
 
@@ -160,8 +162,8 @@ fetchCategories();
 
         ...prev,
 
-        products:
-        prev.products.filter(
+        services:
+        prev.services.filter(
           item=>item!==value
         )
 
@@ -188,7 +190,7 @@ fetchCategories();
 
 
 
-    if(form.products.length===0){
+    if(form.services.length===0){
 
       showError(
         "Vui lòng chọn ít nhất 1 dịch vụ để được tư vấn."
@@ -217,7 +219,8 @@ setForm({
 
 name:"",
 phone:"",
-products:[]
+services:[],
+  message:""
 
 });
 
@@ -332,17 +335,21 @@ onClick={()=>setErrorPopup("")}
 
 
 <div className="booking-box">
+<div className="bookingIntro">
 
+    <span className="bookingTag">
+        FPT Telecom
+    </span>
 
-<h1>
-Đăng ký tư vấn dịch vụ
-<br/>
-FPT Telecom
-</h1>
+    <h1>
+        Đăng ký tư vấn và lắp đặt Internet FPT
+    </h1>
 
+ <p>
+    Điền thông tin để được tư vấn gói cước Internet FPT phù hợp và hỗ trợ lắp đặt nhanh tại khu vực của bạn.
+</p>
 
-
-
+</div>
 <form
 onSubmit={handleSubmit}
 className="booking-form"
@@ -411,7 +418,7 @@ type="checkbox"
 value={category.name}
 
 checked={
-form.products.includes(
+form.services.includes(
 category.name
 )
 }
@@ -438,7 +445,29 @@ onChange={handleCheckbox}
 
 
 
+<div className="formGroup">
 
+  <label>
+
+    Ghi chú <span>(không bắt buộc)</span>
+
+  </label>
+
+  <textarea
+
+    name="message"
+
+    placeholder="Ví dụ: Muốn lắp vào cuối tuần, cần tư vấn gói cho gia đình..."
+
+    value={form.message}
+
+    onChange={handleChange}
+
+    rows={4}
+
+  />
+
+</div>
 
 <div className="submitBar">
 

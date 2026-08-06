@@ -1,244 +1,642 @@
 "use client";
 
-import { useState } from "react";
-import "./page.css";
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
 import BackButton from "@/components/BackButton/BackButton";
 
+import "./page.css";
+
 export default function ContactPage() {
-  const [form, setForm] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    products: [],
-    productType: "",
-    message: "",
-  });
 
-  const [loading, setLoading] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
-  const [errorPopup, setErrorPopup] = useState("");
+    // ==========================
+    // STATE
+    // ==========================
 
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
+    const [categories, setCategories] = useState([]);
+
+    const [form, setForm] = useState({
+
+        name: "",
+        phone: "",
+        services: [],
+        message: "",
+
     });
-  };
 
-  const handleCheckbox = (e) => {
-    const { value, checked } = e.target;
+    const [loading, setLoading] = useState(false);
 
-    if (checked) {
-      setForm({
-        ...form,
-        products: [...form.vs, value],
-      });
-    } else {
-      setForm({
-        ...form,
-        products: form.products.filter((i) => i !== value),
-      });
-    }
-  };
+    const [showPopup, setShowPopup] = useState(false);
 
-  const showError = (msg) => {
-    setErrorPopup(msg);
-    setTimeout(() => setErrorPopup(""), 3000);
-  };
-const handleSubmit = async (e) => {
-  e.preventDefault();
+    const [errorPopup, setErrorPopup] = useState("");
 
-  if (form.products.length === 0) {
-    showError("Vui lòng chọn ít nhất 1 sản phẩm.");
-    return;
-  }
 
-  if (!form.productType) {
-    showError("Vui lòng chọn hình thức làm đẹp.");
-    return;
-  }
+    // ==========================
+    // LOAD CATEGORIES
+    // ==========================
 
-  setLoading(true);
+    useEffect(() => {
 
-  const formData = { ...form };
+        const fetchCategories = async () => {
 
-  // reset form ngay
-  setForm({
-    name: "",
-    phone: "",
-    email: "",
-    products: [],
-    productType: "",
-    message: "",
-  });
+            const {
+                data,
+                error
+            } = await supabase
 
-  // hiện popup ngay lập tức
-  setShowPopup(true);
+                .from("categories")
 
-  // tự đóng popup
-  setTimeout(() => {
-    setShowPopup(false);
-  }, 2500);
+                .select(`
+                    id,
+                    name
+                `)
 
-  // gửi API nền
-  fetch("/api", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formData),
-  }).catch(() => {
-    showError("Có lỗi xảy ra khi gửi dữ liệu.");
-  });
+                .eq(
+                    "status",
+                    true
+                )
 
-  setLoading(false);
-};
+                .order("name");
 
-  return (
-    <div className="contact">
-      <BackButton />
 
-      {/* ERROR POPUP */}
-      {errorPopup && (
-        <div className="successOverlay">
-          <div className="successPopup errorPopup">
-            <div className="successIcon">⚠️</div>
-            <h2>Nhà Ngọc thông báo</h2>
-            <p>{errorPopup}</p>
-            <button onClick={() => setErrorPopup("")}>Đóng</button>
-          </div>
-        </div>
-      )}
+            if (error) {
 
-      {/* SUCCESS POPUP */}
-      {showPopup && (
-        <div className="successOverlay">
-          <div className="successPopup">
-            <div className="successIcon">🎉</div>
-            <h2>Gửi thành công!</h2>
-            <p>Chúng tôi sẽ liên hệ bạn sớm nhất.</p>
-            <button onClick={() => setShowPopup(false)}>Đóng</button>
-          </div>
-        </div>
-      )}
+                console.log(error);
 
-      {/* HERO */}
-      <div className="contact-hero">
-        <h1>Liên hệ tư vấn</h1>
-        <p>Gửi thông tin, chúng tôi sẽ hỗ trợ nhanh nhất</p>
-      </div>
+                return;
 
-      <div className="contact-wrapper">
-        <div className="contact-form">
-          <p>Điền thông tin để được tư vấn</p>
+            }
 
-          <form onSubmit={handleSubmit} className="booking-form">
-            <input
-              name="name"
-              placeholder="Họ và tên"
-              value={form.name}
-              onChange={handleChange}
-              required
-            />
+            setCategories(data || []);
 
-            <input
-              name="phone"
-              placeholder="Số điện thoại"
-              value={form.phone}
-              onChange={handleChange}
-              required
-            />
+        };
 
-            <input
-              name="email"
-              placeholder="Email (không bắt buộc)"
-              value={form.email}
-              onChange={handleChange}
-            />
+        fetchCategories();
 
-            <select
-              name="productType"
-              value={form.productType}
-              onChange={handleChange}
-              required
-            >
-              <option value="">-- Chọn hình thức --</option>
-              <option value="Làm tại cơ sở">Làm tại cơ sở</option>
-              <option value="Làm tại nhà">Làm tại nhà</option>
-            </select>
+    }, []);
 
-            <div className="checkboxGroup">
-              <p className="checkboxTitle">Chọn sản phẩm</p>
 
-              <label>
-                <input
-                  type="checkbox"
-                  value="Môi"
-                  checked={form.products.includes("Môi")}
-                  onChange={handleCheckbox}
-                />
-                Môi
-              </label>
+    // ==========================
+    // INPUT
+    // ==========================
 
-              <label>
-                <input
-                  type="checkbox"
-                  value="Mày"
-                  checked={form.products.includes("Mày")}
-                  onChange={handleCheckbox}
-                />
-                Mày
-              </label>
+    const handleChange = (e) => {
 
-              <label>
-                <input
-                  type="checkbox"
-                  value="Ti"
-                  checked={form.products.includes("Ti")}
-                  onChange={handleCheckbox}
-                />
-                Ti
-              </label>
+        setForm({
 
-              <label>
-                <input
-                  type="checkbox"
-                  value="Bikini"
-                  checked={form.products.includes("Bikini")}
-                  onChange={handleCheckbox}
-                />
-                Bikini
-              </label>
+            ...form,
 
-              <label>
-                <input
-                  type="checkbox"
-                  value="Khử thâm"
-                  checked={form.products.includes("Khử thâm")}
-                  onChange={handleCheckbox}
-                />
-                Khử thâm
-              </label>
+            [e.target.name]:
+                e.target.value,
+
+        });
+
+    };
+
+
+    // ==========================
+    // CHECKBOX
+    // ==========================
+
+    const handleCheckbox = (e) => {
+
+        const {
+
+            value,
+
+            checked
+
+        } = e.target;
+
+
+        if (checked) {
+
+            setForm(prev => ({
+
+                ...prev,
+
+                services: [
+
+                    ...prev.services,
+
+                    value
+
+                ]
+
+            }));
+
+        }
+
+        else {
+
+            setForm(prev => ({
+
+                ...prev,
+
+                services:
+                    prev.services.filter(
+                        item => item !== value
+                    )
+
+            }));
+
+        }
+
+    };
+
+
+    // ==========================
+    // ERROR
+    // ==========================
+
+    const showError = (msg) => {
+
+        setErrorPopup(msg);
+
+        setTimeout(() => {
+
+            setErrorPopup("");
+
+        }, 3000);
+
+    };
+
+
+    // ==========================
+    // SUBMIT
+    // ==========================
+
+    const handleSubmit = async (e) => {
+
+        e.preventDefault();
+
+
+        if (!form.name.trim()) {
+
+            showError(
+                "Vui lòng nhập họ và tên."
+            );
+
+            return;
+
+        }
+
+
+        if (!form.phone.trim()) {
+
+            showError(
+                "Vui lòng nhập số điện thoại."
+            );
+
+            return;
+
+        }
+
+
+        if (form.services.length === 0) {
+
+            showError(
+                "Vui lòng chọn ít nhất một dịch vụ."
+            );
+
+            return;
+
+        }
+
+
+        setLoading(true);
+
+
+        const formData = {
+
+            ...form
+
+        };
+
+
+        try {
+
+            // reset form
+
+            setForm({
+
+                name: "",
+
+                phone: "",
+
+                services: [],
+
+                message: "",
+
+            });
+
+
+            // hiện popup
+
+            setShowPopup(true);
+
+
+            setTimeout(() => {
+
+                setShowPopup(false);
+
+            }, 3000);
+
+
+            // gửi API nền
+
+            fetch("/api", {
+
+                method: "POST",
+
+                headers: {
+
+                    "Content-Type": "application/json"
+
+                },
+
+                body: JSON.stringify(formData)
+
+            })
+                .then(res => res.json())
+                .then(data => {
+
+                    console.log("Email:", data);
+
+                })
+                .catch(err => {
+
+                    console.log(err);
+
+                });
+
+        }
+
+        catch (err) {
+
+            console.log(err);
+
+            showError(
+                "Không thể gửi yêu cầu."
+            );
+
+        }
+
+        finally {
+
+            setLoading(false);
+
+        }
+
+    };
+    return (
+
+    <main className="contactPage">
+
+        <BackButton />
+
+
+        {/* ==========================
+            ERROR POPUP
+        ========================== */}
+
+        {
+
+            errorPopup && (
+
+                <div className="popupOverlay">
+
+                    <div className="popup error">
+
+                        <div className="popupIcon">
+
+                            ⚠️
+
+                        </div>
+
+                        <h2>
+
+                            FPT Telecom
+
+                        </h2>
+
+                        <p>
+
+                            {errorPopup}
+
+                        </p>
+
+                        <button
+
+                            onClick={() => setErrorPopup("")}
+
+                        >
+
+                            Đóng
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            )
+
+        }
+
+
+        {/* ==========================
+            SUCCESS POPUP
+        ========================== */}
+
+        {
+
+            showPopup && (
+
+                <div className="popupOverlay">
+
+                    <div className="popup">
+
+                        <div className="popupIcon">
+
+                            🎉
+
+                        </div>
+
+                        <h2>
+
+                            Gửi thành công!
+
+                        </h2>
+
+                        <p>
+
+                            Cảm ơn bạn đã đăng ký tư vấn.
+                            Chúng tôi sẽ liên hệ trong thời gian sớm nhất.
+
+                        </p>
+
+                        <button
+
+                            onClick={() => setShowPopup(false)}
+
+                        >
+
+                            Đóng
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            )
+
+        }
+
+
+        {/* ==========================
+            HERO
+        ========================== */}
+
+        <section className="contactHero">
+
+            <span className="contactTag">
+
+                FPT Telecom
+
+            </span>
+
+            <h1>
+
+                Liên hệ tư vấn lắp đặt Internet FPT
+
+            </h1>
+
+            <p>
+
+                Điền thông tin để được tư vấn miễn phí,
+                lựa chọn gói cước phù hợp và hỗ trợ
+                lắp đặt Internet FPT nhanh chóng.
+
+            </p>
+
+        </section>
+
+
+        {/* ==========================
+            CONTENT
+        ========================== */}
+
+        <section className="contactWrapper">
+
+
+            {/* ==========================
+                FORM
+            ========================== */}
+
+            <div className="contactForm">
+
+                <h2>
+
+                    Gửi yêu cầu tư vấn
+
+                </h2>
+
+                <p>
+
+                    Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.
+
+                </p>
+
+
+                <form
+
+                    onSubmit={handleSubmit}
+
+                    className="booking-form"
+
+                >
+
+                    <input
+
+                        name="name"
+
+                        placeholder="Họ và tên"
+
+                        value={form.name}
+
+                        onChange={handleChange}
+
+                        required
+
+                    />
+
+
+                    <input
+
+                        name="phone"
+
+                        placeholder="Số điện thoại"
+
+                        value={form.phone}
+
+                        onChange={handleChange}
+
+                        required
+
+                    />
+
+
+                    <div className="checkboxGroup">
+
+                        <p className="checkboxTitle">
+
+                            Chọn dịch vụ bạn quan tâm
+
+                        </p>
+
+
+                        {
+
+                            categories.map(category => (
+
+                                <label
+
+                                    key={category.id}
+
+                                >
+
+                                    <input
+
+                                        type="checkbox"
+
+                                        value={category.name}
+
+                                        checked={
+                                            form.services.includes(
+                                                category.name
+                                            )
+                                        }
+
+                                        onChange={handleCheckbox}
+
+                                    />
+
+                                    <span>
+
+                                        {category.name}
+
+                                    </span>
+
+                                </label>
+
+                            ))
+
+                        }
+
+                    </div>
+
+
+                    <textarea
+
+                        name="message"
+
+                        placeholder="Ghi chú (không bắt buộc)"
+
+                        value={form.message}
+
+                        onChange={handleChange}
+
+                    />
+
+
+                    <button
+
+                        disabled={loading}
+
+                    >
+
+                        {
+
+                            loading
+
+                                ?
+
+                                "Đang gửi..."
+
+                                :
+
+                                "Gửi yêu cầu"
+
+                        }
+
+                    </button>
+
+
+                    <p className="bookingNote">
+
+                        ✓ Tư vấn miễn phí &nbsp;&nbsp;
+
+                        ✓ Hỗ trợ khảo sát &nbsp;&nbsp;
+
+                        ✓ Lắp đặt nhanh
+
+                    </p>
+
+                </form>
+
             </div>
 
-            <button disabled={loading}>
-              {loading ? "Đang gửi..." : "Gửi yêu cầu"}
-            </button>
-          </form>
-        </div>
 
-        <div className="contact-info">
-          <h2>Thông tin</h2>
-                    <p>📍Trụ sở: 354/47 Quốc lộ 1, Phường Bình Tân, TP.HCM</p>
-          <p>📍Cơ sở: 15A Sông Đà, Phường Tân Sơn Hòa, TP.HCM</p>
-          <p>📞 0372 089 821</p>
-          <p>📧 nguyentinhngoc@gmail.com</p>
+            {/* ==========================
+                INFO
+            ========================== */}
 
-          <div className="contact-note">
-            Cảm ơn bạn đã tin tưởng Nhà Ngọc
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+            <aside className="contactInfo">
+
+                <h2>
+
+                    Thông tin liên hệ
+
+                </h2>
+
+
+                <div className="infoItem">
+
+                    📞 Hotline: 1900 xxxx
+
+                </div>
+
+
+                <div className="infoItem">
+
+                    📍 Địa chỉ: ...
+
+                </div>
+
+
+                <div className="infoItem">
+
+                    ⏰ Thời gian hỗ trợ:
+                    07:30 - 21:00
+
+                </div>
+
+
+                <div className="contactNote">
+
+                    Sau khi nhận được thông tin,
+                    chuyên viên FPT Telecom sẽ liên hệ
+                    để tư vấn gói cước và lịch lắp đặt
+                    phù hợp trong thời gian sớm nhất.
+
+                </div>
+
+            </aside>
+
+        </section>
+
+    </main>
+
+);
 }

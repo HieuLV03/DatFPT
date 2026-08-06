@@ -702,7 +702,203 @@
 
 
 }
+/* ==========================
+   INTRO
+========================== */
 
+.bookingIntro{
+
+    text-align:center;
+
+    margin-bottom:32px;
+
+}
+
+.bookingTag{
+
+    display:inline-block;
+
+    padding:7px 16px;
+
+    border-radius:999px;
+
+    background:#edf5ff;
+
+    color:#005baa;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    letter-spacing:.5px;
+
+}
+
+.bookingIntro h1{
+
+    margin:18px 0 14px;
+
+    font-size:34px;
+
+    line-height:1.25;
+
+    color:#1f2937;
+
+    font-weight:800;
+
+}
+
+.bookingIntro p{
+
+    max-width:620px;
+
+    margin:auto;
+
+    color:#6b7280;
+
+    line-height:1.7;
+
+    font-size:15px;
+
+}
+
+/* ==========================
+   BUTTON
+========================== */
+
+.submitBar{
+
+    margin-top:10px;
+
+}
+
+.submitBar button{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#f58220;
+
+    color:#fff;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.submitBar button:hover{
+
+    background:#e06d0b;
+
+    transform:translateY(-2px);
+
+    box-shadow:0 12px 28px rgba(245,130,32,.25);
+
+}
+
+.submitBar button:disabled{
+
+    opacity:.65;
+
+    cursor:not-allowed;
+
+}
+
+/* ==========================
+   MOBILE
+========================== */
+
+@media(max-width:768px){
+
+.bookingIntro{
+
+    margin-bottom:24px;
+
+}
+.formGroup{
+
+    margin-top:20px;
+
+}
+
+.formGroup label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    color:#333;
+
+}
+
+.formGroup label span{
+
+    font-weight:400;
+
+    color:#888;
+
+}
+
+.formGroup textarea{
+
+    width:100%;
+
+    min-height:120px;
+
+    padding:14px 16px;
+
+    border:1px solid #ddd;
+
+    border-radius:12px;
+
+    resize:vertical;
+
+    font-size:15px;
+
+    font-family:inherit;
+
+    transition:.25s;
+
+}
+
+.formGroup textarea:focus{
+
+    outline:none;
+
+    border-color:#00a0e9;
+
+    box-shadow:0 0 0 3px rgba(0,160,233,.15);
+
+}
+.bookingIntro h1{
+
+    font-size:28px;
+
+}
+
+.bookingIntro p{
+
+    font-size:14px;
+
+}
+
+}
 
 
 .checkboxGroup input{

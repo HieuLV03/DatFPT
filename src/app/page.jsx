@@ -143,63 +143,47 @@ export default async function HomePage() {
       {/* ==========================
           INTRO
       ========================== */}
+{/* ==========================
+    INTRO SEO
+========================== */}
 
+<section className="heroIntro section">
 
-      <section className="section introSection">
+    <span className="sectionTag">
+        FPT Telecom
+    </span>
 
+    <h1>
+        Lắp đặt nhanh <br></br> Internet FPT tốc độ cao<br></br> WiFi mạnh và ổn định
+    </h1>
 
-        <div className="introContent">
+    <p>
 
+        Đăng ký Internet cáp quang FPT với nhiều gói cước dành cho
+        cá nhân, gia đình và doanh nghiệp. Hỗ trợ tư vấn, khảo sát,
+        lắp đặt nhanh và chăm sóc kỹ thuật trong suốt quá trình sử dụng.
 
-          <span className="sectionTag">
-            FPT TELECOM
-          </span>
+    </p>
 
+    <div className="heroButtons">
 
+        <Link
+            href="/services"
+            className="primaryBtn"
+        >
+            Xem gói cước
+        </Link>
 
-          <h1>
+        <Link
+            href="/contact"
+            className="outlineBtn"
+        >
+            Đăng ký lắp đặt
+        </Link>
 
-            Internet FPT tốc độ cao –
-            Kết nối ổn định cho mọi gia đình
-            và doanh nghiệp
+    </div>
 
-          </h1>
-
-
-
-
-          <p>
-
-            FPT Telecom là đơn vị cung cấp
-            dịch vụ Internet cáp quang,
-            truyền hình FPT Play, Camera AI
-            và các giải pháp công nghệ hàng đầu.
-
-          </p>
-
-
-
-          <p>
-
-            Khám phá các gói cước Internet FPT
-            mới nhất, nhiều chương trình ưu đãi
-            hấp dẫn và đăng ký lắp đặt nhanh.
-
-          </p>
-
-
-
-        </div>
-
-
-      </section>
-
-
-
-
-
-
-
+</section>
 
       {/* ==========================
           SERVICES
@@ -476,7 +460,85 @@ export default async function HomePage() {
 
       </section>
 
+<section className="section faqSection">
 
+    <div className="sectionHeader center">
+
+        <span className="sectionTag">
+            Câu hỏi thường gặp
+        </span>
+
+        <h2>
+            Giải đáp về dịch vụ Internet FPT
+        </h2>
+
+    </div>
+
+    <div className="faqList">
+
+        <details>
+
+            <summary>
+                Internet FPT có hỗ trợ lắp đặt tận nơi không?
+            </summary>
+
+            <p>
+                Có. Đội ngũ kỹ thuật sẽ khảo sát hạ tầng và hỗ trợ lắp đặt tại nhà hoặc doanh nghiệp theo khu vực có hạ tầng FPT.
+            </p>
+
+        </details>
+
+        <details>
+
+            <summary>
+                Thời gian lắp đặt Internet FPT mất bao lâu?
+            </summary>
+
+            <p>
+                Sau khi hoàn tất đăng ký và xác nhận thông tin, kỹ thuật viên sẽ sắp xếp lịch lắp đặt trong thời gian sớm nhất tùy khu vực.
+            </p>
+
+        </details>
+
+        <details>
+
+            <summary>
+                Có thể nâng cấp gói cước sau khi sử dụng không?
+            </summary>
+
+            <p>
+                Có. Khách hàng có thể nâng cấp hoặc thay đổi gói cước khi nhu cầu sử dụng thay đổi.
+            </p>
+
+        </details>
+
+        <details>
+
+            <summary>
+                Internet FPT có phù hợp chơi game và livestream?
+            </summary>
+
+            <p>
+                Các gói cước tốc độ cao của FPT đáp ứng tốt nhu cầu chơi game, học online, làm việc từ xa và livestream.
+            </p>
+
+        </details>
+
+        <details>
+
+            <summary>
+                FPT có hỗ trợ doanh nghiệp không?
+            </summary>
+
+            <p>
+                Có. FPT Telecom cung cấp nhiều giải pháp Internet và hạ tầng mạng dành riêng cho doanh nghiệp.
+            </p>
+
+        </details>
+
+    </div>
+
+</section>
 
 
 
