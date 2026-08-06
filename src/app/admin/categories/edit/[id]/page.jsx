@@ -15,7 +15,7 @@ export default function EditCategoryPage() {
   const [form, setForm] = useState({
     name: "",
     slug: "",
-    img: "",
+    image: "",
   });
 
   const [imageFile, setImageFile] = useState(null);
@@ -52,10 +52,10 @@ export default function EditCategoryPage() {
     setForm({
       name: data.name,
       slug: data.slug,
-      img: data.img || "",
+      image: data.image || "",
     });
 
-    setPreview(data.img || "");
+    setPreview(data.image || "");
   };
   const randomString = () =>
   Math.random().toString(36).substring(2, 8);
@@ -86,7 +86,7 @@ const handleUploadImage = async (e) => {
 
     setForm((prev) => ({
       ...prev,
-      img: data.publicUrl,
+      image: data.publicUrl,
     }));
 
     setPreview(data.publicUrl);
@@ -104,14 +104,14 @@ const updateCategory = async () => {
 
   console.log("ID =", id);
 console.log("FORM =", form);
-console.log("IMG =", form.img);
+console.log("IMG =", form.image);
 
 const { data, error } = await supabase
   .from("categories")
   .update({
     name: form.name,
     slug: form.slug,
-    img: form.img,
+    image: form.image,
   })
   .eq("id", Number(id))
   .select();
