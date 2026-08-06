@@ -113,7 +113,7 @@ const { data, error } = await supabase
     slug: form.slug,
     image: form.image,
   })
-  .eq("id", Number(id))
+  .eq("id", id)
   .select();
 
 console.log("UPDATED =", data);
